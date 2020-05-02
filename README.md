@@ -7,6 +7,6 @@
 
 ### Check out [the code](https://github.com/globules-io/OGX.Demo) of the demo
 
-### Check out OGX.JS [wiki](https://github.com/globules-io/OGX.JS/wiki)
+### Read the OGX.JS [wiki](https://github.com/globules-io/OGX.JS/wiki)
 
-### Check out OGX.CLI [wiki](https://github.com/globules-io/OGX.CLI/wiki)
+### Read the OGX.CLI [wiki](https://github.com/globules-io/OGX.CLI/wiki)
