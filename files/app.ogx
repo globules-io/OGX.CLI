@@ -1,0 +1,51 @@
+{
+    "routing":{
+		"routes":{},
+		"options":{
+			"history":true,
+			"bookmarkable":true            
+        },
+		"errors":{}
+    },
+    "vapps":{
+        
+    },
+    "templates":{
+       
+    },
+	"preload":{
+        "images":{
+            "path":"img/",
+            "files":[]
+        },
+        "sounds":{
+            "path":"snd/",
+            "files":[]
+        },
+        "fonts":[],
+        "json":{
+            "path":"json/",
+            "files":[]
+        }
+    },
+	"popups":{
+        "width":300,
+        "height":400,
+        "anim":"OGX.Popup.ANIM_FADE",
+        "overlay":true,
+        "listen_overlay":false
+    },    
+    "windows":{
+        "style":"OGX.Window.HEAD_BACK",
+        "width":"100%",
+        "icons":["img/logo.svg"],
+        "fade":false,
+        "scroll":false,
+        "blured":true,
+        "show":false
+    },
+    "overlays":{
+        "anim":"OGX.Overlay.ANIM_FADE"
+    },
+    "scope":["public"]    
+}

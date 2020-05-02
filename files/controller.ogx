@@ -1,0 +1,18 @@
+require('Controllers.{{NAME}}', 'Controller');
+OGX.Controllers.MyController = function(){
+    construct(this, 'Controllers.{{NAME}}');
+    'use strict';
+
+    //@Override
+    this.construct = function(){};
+	
+    //@Override
+	this.enable = function(){};
+	
+    //@Override
+	this.disable = function(){};
+    
+    //@Override
+    this.ux = function(){};    
+     
+};

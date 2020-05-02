@@ -1,0 +1,23 @@
+require('Stages.{{NAME}}', 'Stage');
+OGX.Stages.{{NAME}} = function(__obj){
+    construct(this, 'Stages.{{NAME}}');
+	'use strict';
+
+    //@Override
+	this.construct = function(){};
+	
+    //@Override
+	this.enable = function(){};
+	
+    //@Override
+	this.disable = function(){};
+	
+    //@Override
+	this.ux = function(__bool){
+        if(__bool){
+            
+        }else{
+           
+        }
+	};    
+};
