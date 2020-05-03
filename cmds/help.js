@@ -31,6 +31,10 @@ const menus = {
         syntax      : ogx sounds
         description : list and adds for preload all sounds in /www/snd
 
+    jsons
+        syntax      : ogx jsons
+        description : list and adds for preload all json documents in /www/json
+
     version
         syntax      : ogx version
         description : show the current version of the CLI
