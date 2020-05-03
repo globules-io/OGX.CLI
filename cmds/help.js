@@ -15,6 +15,14 @@ const menus = {
         description : delete an object (view, controller, template, stage)
         example     : ogx delete template myTemplate
 
+    compress
+        syntax      : ogx compress
+        description : compress and link js and css files
+
+    restore
+        syntax      : ogx restore
+        description : restore and link previously compressed fimes
+
     version
         syntax      : ogx version
         description : show the current version of the CLI

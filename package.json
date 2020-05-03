@@ -1,6 +1,6 @@
 {
   "name": "@globules-io/ogx.cli",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "OGX CLI for OGX.JS",
   "repository": {
     "type": "git",
@@ -13,12 +13,21 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "CLI"
+    "CLI",
+    "javascript",
+    "framework"
   ],
   "author": "globules.io",
   "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/globules-io/OGX.CLI/issues"
+  },
+  "homepage": "https://github.com/globules-io/OGX.CLI#readme",
   "dependencies": {
     "@globules-io/ogx.js": "^1.0.14",
-    "fs": "0.0.1-security"
+    "child_process": "^1.0.2",
+    "csso": "^4.0.3",
+    "fs": "0.0.1-security",
+    "uglifyjs": "^2.4.11"
   }
 }
