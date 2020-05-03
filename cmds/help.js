@@ -23,6 +23,14 @@ const menus = {
         syntax      : ogx restore
         description : restore and link previously compressed fimes
 
+    images
+        syntax      : ogx images
+        description : list and adds for preload all images in /www/img
+
+    sounds
+        syntax      : ogx sounds
+        description : list and adds for preload all sounds in /www/snd
+
     version
         syntax      : ogx version
         description : show the current version of the CLI
