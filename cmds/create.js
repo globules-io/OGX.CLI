@@ -15,7 +15,7 @@ module.exports = (args) => {
     file = file.replace(/{{NAME}}/gi, args[1]);
     let link = false;
     let template = false;
-    let dest, path;        
+    let config, dest, path;        
     switch(args[0]){
         case 'template':
         path = 'www/html';       
@@ -59,7 +59,7 @@ module.exports = (args) => {
             if(!reg.test(file)){
                 file = file.replace('</head>', link+'\n</head>');
                 fs.writeFileSync('www/index.html', file);
-                console.log('Linked File:', link);  
+                console.log('Info: File linked', link);  
             }else{
                 console.log('Warning: File already linked!');
             }
@@ -68,27 +68,23 @@ module.exports = (args) => {
         }
     }else{
         if(template){
-            file = fs.readFileSync('www/app.json', 'utf-8');
-            if(file){
-                file = JSON.parse(file);
-                if(!file){
-                    file = {};
+            config = fs.readFileSync('www/app.json', 'utf-8');
+            if(config){
+                config = JSON.parse(config);
+                if(!config){
+                    console.log('Error: app.json decoding error');
+                    return;
                 }
-                if(!file.hasOwnProperty('preload')){
-                    file.preload = [];
+                if(!config.hasOwnProperty('preload')){
+                    config.preload = {};
+                }                
+                if(!config.preload.hasOwnProperty(template.path)){
+                    config.preload[template.path] = [template.file];                    
+                }else{
+                    config.preload[template.path].push(template.file);
                 }
-                let found = false;
-                for(let i = 0; i < file.preload.length; i++){
-                    if(file.preload[i].path === template.path && file.preload[i].files.indexOf(template.file) === -1){                       
-                        found = true;
-                        break;
-                    }
-                }
-                if(!found){
-                    file.preload.push({path:template.path, files:[template.file]});
-                    console.log('Added to preload:', template);  
-                }
-                fs.writeFileSync('www/app.json', JSON.stringify(file, null, 4));
+                console.log('Info: Added to preload', template);  
+                fs.writeFileSync('www/app.json', JSON.stringify(config, null, 4));
             }else{
                 console.log('Warning: app.json file not found, preload skipped');
             }           

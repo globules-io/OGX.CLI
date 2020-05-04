@@ -12,7 +12,7 @@ module.exports = (args) => {
     const fs = require('fs');
     let link = false;
     let template = false;
-    let dest, path, file;       
+    let config, dest, path, file;       
     switch(args[0]){
         case 'template':
         path = 'www/html';       
@@ -57,20 +57,26 @@ module.exports = (args) => {
         }
     }else{
         if(template){
-            file = fs.readFileSync('www/app.json', 'utf-8');
-            if(file){
-                file = JSON.parse(file);
-                if(file.hasOwnProperty('preload')){
+            config = fs.readFileSync('www/app.json', 'utf-8');
+            if(config){
+                config = JSON.parse(config);
+                if(!config){
+                    console.log('Error: app.json decoding error');
+                    return;
+                }
+                if(config.hasOwnProperty('preload')){                    
                     let idx;
-                    for(let i = 0; i < file.preload.length; i++){
-                        if(file.preload[i].path === template.path){
-                            idx = file.preload[i].files.indexOf(template.file);
-                            if(idx > -1){
-                                file.preload.splice(idx, 1);
-                                fs.writeFileSync('www/app.json', JSON.stringify(file, null, 4));
-                                console.log('Info: Removed from preload', template);  
-                                break;
+                    if(config.preload.hasOwnProperty(template.path)){
+                        idx = config.preload[template.path].indexOf(template.file);
+                        if(idx !== -1){
+                            config.preload[template.path].splice(idx, 1);
+                            if(!config.preload[template.path].length){
+                                delete config.preload[template.path];
                             }
+                            fs.writeFileSync('www/app.json', JSON.stringify(config, null, 4));
+                            console.log('Info: Removed from preload', template);  
+                        }else{
+                            console.log('Warning: File not found in preload, skipped', template);  
                         }
                     }
                 }

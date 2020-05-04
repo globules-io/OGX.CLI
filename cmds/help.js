@@ -35,6 +35,11 @@ const menus = {
         syntax      : ogx jsons
         description : list and adds for preload all json documents in /www/json
 
+    build
+        syntax      : ogx build [target] [optional mode]
+        description : build the application
+        example     : ogx build android
+
     version
         syntax      : ogx version
         description : show the current version of the CLI
