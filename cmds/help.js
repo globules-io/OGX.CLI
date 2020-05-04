@@ -33,7 +33,11 @@ const menus = {
 
     jsons
         syntax      : ogx jsons
-        description : list and adds for preload all json documents in /www/json
+        description : list and adds for preload all json documents from /www/json
+
+    templates
+        syntax      : ogx templates
+        description : list and adds for preload all html templates from /www/html
 
     build
         syntax      : ogx build [target] [optional mode]
