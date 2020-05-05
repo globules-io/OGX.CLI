@@ -10,32 +10,44 @@ module.exports = (args) => {
         return;
     }
     const fs = require('fs');
-    let link = false;
+    let links = [];
     let template = false;
-    let config, dest, path, file;       
+    let config, dest, path, name, file;       
     switch(args[0]){
         case 'template':
-        path = 'www/html';       
-        dest = path+'/template.'+args[1]+'.html';      
+        path = 'www/html';    
+        name = 'template.'+args[1]+'.html';  
+        dest = path+'/'+name;      
         template = {path:'/html', file:'template.'+args[1]+'.html'};
         break;
 
         case 'view':
         path = 'www/js/views';      
-        dest = path+'/view.'+args[1]+'.js';
-        link = '<script type="text/javascript" src="'+dest+'"></script>';
+        name = 'view.'+args[1]+'.js';
+        dest = path+'/'+name;
+        links.push('<script type="application/javascript" src="js/views/'+name+'"></script>');
+        if(fs.existsSync('www/css/views/view.'+args[1]+'.css')){
+            fs.unlinkSync('www/css/views/view.'+args[1]+'.css');
+        }
+        links.push('<link rel="stylesheet" href="css/views/view.'+args[1]+'.css">');
         break;
 
         case 'controller':
-        path = 'www/js/controller';   
-        dest = path+'/controller.'+args[1]+'.js';
-        link = '<script type="text/javascript" src="'+dest+'"></script>';
+        path = 'www/js/controllers';   
+        name = 'controller.'+args[1]+'.js';
+        dest = path+'/'+name;
+        links.push('<script type="application/javascript" src="js/controllers/'+name+'"></script>');
         break;
 
         case 'stage':
-        path = 'www/js/stages';        
-        dest = path+'/stage.'+args[1]+'.js';
-        link = '<script type="text/javascript" src="'+dest+'"></script>';
+        path = 'www/js/stages';      
+        name = 'stage.'+args[1]+'.js';  
+        dest = path+'/'+name;
+        links.push('<script type="application/javascript" src="js/stages/'+name+'"></script>');
+        if(fs.existsSync('www/css/stages/stage.'+args[1]+'.css')){
+            fs.unlinkSync('www/css/stages/stage.'+args[1]+'.css');
+        }
+        links.push('<link rel="stylesheet" href="css/stages/stage.'+args[1]+'.css">');
         break;
     } 
     if(!fs.existsSync(dest)){
@@ -44,16 +56,18 @@ module.exports = (args) => {
         fs.unlinkSync(dest);
         console.log('Info: Deleted file', dest);
     }
-    if(link){
+    if(links.length){
         file = fs.readFileSync('www/index.html', 'utf-8');
         if(file){
-            if(file.indexOf(link) !== -1){
-                file = file.replace(link, '');
-                fs.writeFileSync('www/index.html', file);
-                console.log('Unlinked File:', link);  
-            }else{
-                console.log('Warning: File already unlinked!', dest);
+            for(let i = 0; i < links.length; i++){
+                if(file.indexOf(links[i]) !== -1){
+                    file = file.replace(links[i], '');                    
+                    console.log('Unlinked File:', links[i]);  
+                }else{
+                    console.log('Warning: File already unlinked!', dest);
+                }
             }
+            fs.writeFileSync('www/index.html', file);
         }
     }else{
         if(template){

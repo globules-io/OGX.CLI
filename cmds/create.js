@@ -13,33 +13,47 @@ module.exports = (args) => {
     const filename = args[0]+'.ogx';   
     let file = fs.readFileSync('./files/'+filename, 'utf-8');
     file = file.replace(/{{NAME}}/gi, args[1]);
-    let link = false;
+    let links = [];
     let template = false;
-    let config, dest, path;        
+    let config, name, dest, path;        
     switch(args[0]){
         case 'template':
-        path = 'www/html';       
-        dest = path+'/template.'+args[1]+'.html';      
-        template = {path:'/html', file:'template.'+args[1]+'.html'};
+        path = 'www/html';   
+        name = 'template.'+args[1]+'.html'; 
+        dest = path+'/'+name;      
+        template = {path:'/html', file:name};
         break;
 
         case 'view':
-        path = 'www/js/views';      
-        dest = path+'/view.'+args[1]+'.js';
-        link = '<script type="text/javascript" src="'+dest+'"></script>';
-        break;
-
-        case 'controller':
-        path = 'www/js/controller';   
-        dest = path+'/controller.'+args[1]+'.js';
-        link = '<script type="text/javascript" src="'+dest+'"></script>';
+        path = 'www/js/views';   
+        name = 'view.'+args[1]+'.js';    
+        dest = path+'/'+name;        
+        if(!fs.existsSync('www/css/views')){
+            fs.mkdirSync('www/css/views', {recursive:true});            
+        }
+        fs.writeFileSync('www/css/views/view.'+args[1]+'.css', '/* CSS */');
+        links.push('<script type="application/javascript" src="js/views/'+name+'"></script>');
+        links.push('<link rel="stylesheet" href="css/views/view.'+args[1]+'.css">');
         break;
 
         case 'stage':
-        path = 'www/js/stages';        
-        dest = path+'/stage.'+args[1]+'.js';
-        link = '<script type="text/javascript" src="'+dest+'"></script>';
+        path = 'www/js/stages'; 
+        name = 'stage.'+args[1]+'.js';           
+        dest = path+'/'+name;    
+        if(!fs.existsSync('www/css/stages')){
+            fs.mkdirSync('www/css/stages', {recursive:true});            
+        }
+        fs.writeFileSync('www/css/stages/stage.'+args[1]+'.css', '/* CSS */');
+        links.push('<script type="application/javascript" src="js/stages/'+name+'"></script>');
+        links.push('<link rel="stylesheet" href="css/stages/stage.'+args[1]+'.css">');
         break;
+
+        case 'controller':
+        path = 'www/js/controllers';   
+        name = 'controller.'+args[1]+'.js';    
+        dest = path+'/'+name;   
+        links.push('<script type="application/javascript" src="js/controllers/'+name+'"></script>');
+        break;        
     }
     if(!fs.existsSync(path)){
         fs.mkdirSync(path, {recursive:true});
@@ -51,18 +65,21 @@ module.exports = (args) => {
         return;
     } 
     console.log('Created file:', args[0], dest);   
-    if(link){
+    if(links.length){
         file = fs.readFileSync('www/index.html', 'utf-8');
         if(file){
             //add in head
-            var reg = new RegExp('/'+link+'/gi');
-            if(!reg.test(file)){
-                file = file.replace('</head>', link+'\n</head>');
-                fs.writeFileSync('www/index.html', file);
-                console.log('Info: File linked', link);  
-            }else{
-                console.log('Warning: File already linked!');
+            var reg;
+            for(let i = 0; i < links.length; i++){
+                reg = new RegExp('/'+links[i]+'/gi');
+                if(!reg.test(file)){
+                    file = file.replace('</head>', links[i]+'\n</head>');                    
+                    console.log('Info: File linked', links[i]);  
+                }else{
+                    console.log('Warning: File already linked!');
+                }
             }
+            fs.writeFileSync('www/index.html', file);
         }else{
             console.log('Warning: index.html file not found, linking skipped');
         }
