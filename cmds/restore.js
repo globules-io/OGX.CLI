@@ -7,7 +7,8 @@ module.exports = (args) => {
         console.log('Error: Not minified!');
         return;
     }
-    let index = fs.readFileSync('www/index.html', 'utf8');
+    let options = args[args.length-1];
+    let index = fs.readFileSync('www/'+options.index, 'utf8');
 
     console.log('Info: Restoring css files');   
     const csss = ['css/bin', 'css/views', 'css/stages'];
@@ -50,7 +51,7 @@ module.exports = (args) => {
     if(index){       
         index = index.replace('<link rel="stylesheet" href="css/min.css">\n', '');
         index = index.replace('<script type="application/javascript" src="js/min.js"></script>\n', '');
-        fs.writeFileSync('www/index.html', index);
+        fs.writeFileSync('www/'+options.index, index);
     }
 
     console.log('Info: Cleaning up');    

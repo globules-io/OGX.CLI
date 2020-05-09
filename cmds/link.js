@@ -9,9 +9,10 @@ module.exports = (args) => {
         console.log('Error: Invalid object!');
         return;
     }    
+    let index_file = args[args.length-1].index;
     if(args.length){
         const fs = require('fs');
-        let index = fs.readFileSync('www/index.html', 'utf-8');
+        let index = fs.readFileSync('www/'+index_file, 'utf-8');
         if(index){
             if(['all', 'views'].indexOf(args[0] !== -1)){               
                 fs.readdirSync('www/js/views').forEach(file => {                  
@@ -34,9 +35,9 @@ module.exports = (args) => {
                     console.log('Info: linked', file);
                 });       
             }   
-            fs.writeFileSync('www/index.html', index);    
+            fs.writeFileSync('www/'+index_file, index);    
         }else{
-            console.log('Warning: index.html file not found, linking skipped');
+            console.log('Warning:', index_file, 'file not found, linking skipped');
         } 
     }
 };

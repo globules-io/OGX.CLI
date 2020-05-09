@@ -66,7 +66,8 @@ module.exports = (args) => {
     } 
     console.log('Created file:', args[0], dest);   
     if(links.length){
-        file = fs.readFileSync('www/index.html', 'utf-8');
+        let options = args[args.length-1];
+        file = fs.readFileSync('www/'+options.index, 'utf-8');
         if(file){
             //add in head
             var reg;
@@ -79,9 +80,9 @@ module.exports = (args) => {
                     console.log('Warning: File already linked!');
                 }
             }
-            fs.writeFileSync('www/index.html', file);
+            fs.writeFileSync('www/'+options.index, file);
         }else{
-            console.log('Warning: index.html file not found, linking skipped');
+            console.log('Warning:', options.index, 'file not found, linking skipped');
         }
     }else{
         if(template){

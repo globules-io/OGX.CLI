@@ -9,6 +9,7 @@ module.exports = (args) => {
     const reg = /(\.ttf|\.eot|\.woff|\.woff2)/gi;
     let output = '';
     let font;
+    let options = args[args.length-1];
     config = fs.readFileSync('www/app.json', 'utf-8');
     if(config){
         config = JSON.parse(config);
@@ -40,12 +41,12 @@ module.exports = (args) => {
                 if(!fs.existsSync('www/css/bin')){
                     fs.mkdirSync('www/css/bin', {recursive:true});
                 }
-                fs.writeFileSync('www/css/bin/fonts.css', output);
-                if(fs.existsSync('www/index.html')){
-                    let index = fs.readFileSync('www/index.html', 'utf8');
+                fs.writeFileSync('www/css/bin/fonts.css', output);               
+                if(fs.existsSync('www/'+options.index)){
+                    let index = fs.readFileSync('www/'+options.index, 'utf8');
                     if(index.indexOf('<link href="css/bin/fonts.css" rel="stylesheet" type="text/css">') === -1){
                         index = index.replace('</head>', '<link href="css/bin/fonts.css" rel="stylesheet" type="text/css">\n</head>');
-                        fs.writeFileSync('www/index.html', index);
+                        fs.writeFileSync('www/'+options.index, index);
                     }
                 }
             }

@@ -49,7 +49,7 @@ const menus = {
         example     : ogx link all
 
     unlink
-        syntax      : ogx link [type]
+        syntax      : ogx unlink [type]
         description : list all files of a type and unlinks them from the index file
         example     : ogx link all
 
@@ -57,6 +57,16 @@ const menus = {
         syntax      : ogx build [target] [optional mode]
         description : build the application
         example     : ogx build android
+
+    set
+        syntax      : ogx set [property] [value]
+        description : change a setting of the CLI, such as the example
+        example     : ogx set index index.php
+
+    unset
+        syntax      : ogx unset [property] [value]
+        description : remove a setting from the CLI, if not index
+        example     : ogx unset property value
 
     version
         syntax      : ogx version

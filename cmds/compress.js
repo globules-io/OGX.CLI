@@ -28,7 +28,8 @@ module.exports = (args) => {
         fs.mkdirSync('www/css/min');
     }
     //back up files and remove link
-    let index = fs.readFileSync('www/index.html', 'utf8');
+    let options = args[args.length-1];
+    let index = fs.readFileSync('www/'+options.index, 'utf8');
     let index_back = index;
     let rem;
 
@@ -147,7 +148,7 @@ module.exports = (args) => {
     if(index){
         index = index.replace('</head>', '<link rel="stylesheet" href="css/min.css">\n</head>');
         index = index.replace('</head>', '<script type="application/javascript" src="js/min.js"></script>\n</head>');       
-        fs.writeFileSync('www/index.html', index);
+        fs.writeFileSync('www/'+options.index, index);
     }
 
     console.log('Info: Compress success!'); 

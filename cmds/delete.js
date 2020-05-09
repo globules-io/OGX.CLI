@@ -57,7 +57,8 @@ module.exports = (args) => {
         console.log('Info: Deleted file', dest);
     }
     if(links.length){
-        file = fs.readFileSync('www/index.html', 'utf-8');
+        let options = args[args.length-1];
+        file = fs.readFileSync('www/'+options.index, 'utf-8');
         if(file){
             for(let i = 0; i < links.length; i++){
                 if(file.indexOf(links[i]) !== -1){
@@ -67,7 +68,7 @@ module.exports = (args) => {
                     console.log('Warning: File already unlinked!', dest);
                 }
             }
-            fs.writeFileSync('www/index.html', file);
+            fs.writeFileSync('www/'+options.index, file);
         }
     }else{
         if(template){
