@@ -25,19 +25,23 @@ const menus = {
 
     images
         syntax      : ogx images
-        description : list and adds for preload all images in /www/img
+        description : list and add for preload all images in /www/img
 
     sounds
         syntax      : ogx sounds
-        description : list and adds for preload all sounds in /www/snd
+        description : list and add for preload all sounds in /www/snd
 
     jsons
         syntax      : ogx jsons
-        description : list and adds for preload all json documents from /www/json
+        description : list and add for preload all json documents from /www/json
+
+    fonts
+        syntax      : ogx fonts
+        description : list and add for preload all fonts from /www/fonts and create and link font.css into index.html
 
     templates
         syntax      : ogx templates
-        description : list and adds for preload all html templates from /www/html
+        description : list and add for preload all html templates from /www/html
 
     link
         syntax      : ogx link [type]
