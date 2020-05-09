@@ -20,14 +20,7 @@ module.exports = (args) => {
                     index = index.replace('<link rel="stylesheet" href="css/views/view.'+file.split('.')[1]+'.css">\n', ''); 
                     console.log('Info: unlinked', file);
                 });
-            } 
-            if(['all', 'templates'].indexOf(args[0] !== -1)){     
-                fs.readdirSync('www/html').forEach(file => {                  
-                    index = index.replace('<script type="application/javascript" src="html/'+file+'"></script>\n', '');     
-                    console.log('Info: linked', file);            
-                });  
-               
-            }
+            }            
             if(['all', 'stages'].indexOf(args[0] !== -1)){   
                 fs.readdirSync('www/js/stages').forEach(file => {                  
                     index = index.replace('<script type="application/javascript" src="js/stages/'+file+'"></script>\n', '');  
