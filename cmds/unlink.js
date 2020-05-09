@@ -14,6 +14,12 @@ module.exports = (args) => {
         let options = args[args.length-1];
         let index = fs.readFileSync('www/'+options.index, 'utf-8');
         if(index){
+            if(['all', 'controllers'].indexOf(args[0] !== -1)){               
+                fs.readdirSync('www/js/views').forEach(file => {                  
+                    index = index.replace('<script type="application/javascript" src="js/controllers/'+file+'"></script>\n', '');  
+                    console.log('Info: unlinked', file);
+                });
+            }   
             if(['all', 'views'].indexOf(args[0] !== -1)){               
                 fs.readdirSync('www/js/views').forEach(file => {                  
                     index = index.replace('<script type="application/javascript" src="js/views/'+file+'"></script>\n', '');  

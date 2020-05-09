@@ -14,6 +14,12 @@ module.exports = (args) => {
         const fs = require('fs');
         let index = fs.readFileSync('www/'+index_file, 'utf-8');
         if(index){
+            if(['all', 'controllers'].indexOf(args[0] !== -1)){               
+                fs.readdirSync('www/js/controllers').forEach(file => {                  
+                    index = index.replace('</head>', '<script type="application/javascript" src="js/controllers/'+file+'"></script>\n</head>');  
+                    console.log('Info: linked', file);
+                });
+            }  
             if(['all', 'views'].indexOf(args[0] !== -1)){               
                 fs.readdirSync('www/js/views').forEach(file => {                  
                     index = index.replace('</head>', '<script type="application/javascript" src="js/views/'+file+'"></script>\n</head>');  

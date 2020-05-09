@@ -35,6 +35,14 @@ const menus = {
         syntax      : ogx jsons
         description : list and add for preload all json documents from /www/json
 
+    omls
+        syntax      : ogx omls
+        description : list and add for preload all oml documents from /www/oml
+
+    oses
+        syntax      : ogx oses
+        description : list and add for preload all ose documents from /www/ose
+
     fonts
         syntax      : ogx fonts
         description : list and add for preload all fonts from /www/fonts and create and link font.css into index.html
