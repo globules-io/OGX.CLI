@@ -25,11 +25,7 @@ const menus = {
 
     images
         syntax      : ogx images
-        description : list and add for preload all images in /www/img
-
-    css
-        syntax      : ogx css
-        description : list and link each file in /www/css/bin into index.html
+        description : list and add for preload all images in /www/img    
 
     sounds
         syntax      : ogx sounds
@@ -107,11 +103,11 @@ const menus = {
 
     link: `
     syntax : ogx link [type] 
-    type   : type of object (css, view, controller or stage)`,
+    type   : type of object (js, css, views, controllers or stages)`,
 
     unlink: `
     syntax : ogx unlink [type] 
-    type   : type of object (css, view, controller or stage)`
+    type   : type of object (js, css, views, controllers or stages)`
 };
 
 module.exports = (args) => {   

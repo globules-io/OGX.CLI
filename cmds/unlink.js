@@ -5,7 +5,7 @@ module.exports = (args) => {
         console.log('Error: Missing arguments! Expected [type]');
         return;
     }
-    if(!/(all|views|templates|stages)/gi.test(args[0])){
+    if(!/(all|views|controllers|stages|css|js)/gi.test(args[0])){
         console.log('Error: Invalid object!');
         return;
     }    
@@ -39,7 +39,13 @@ module.exports = (args) => {
                     index = index.replace('<link rel="stylesheet" href="css/bin/'+file+'">\n', '');  
                     console.log('Info: unlinked', file);
                 });       
-            }   
+            }  
+            if(['all', 'js'].indexOf(args[0]) !== -1){   
+                fs.readdirSync('www/js/bin').forEach(file => {                  
+                    index = index.replace('<script type="application/javascript" src="js/bin/'+file+'"></script>\n', '');  
+                    console.log('Info: unlinked', file);
+                });         
+            }  
             fs.writeFileSync('www/'+options.index, index);    
         }else{
             console.log('Warning: index.html file not found, unlink skipped');
