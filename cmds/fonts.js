@@ -6,7 +6,7 @@ module.exports = (args) => {
     const fs = require('fs');
     const path = 'www/fonts';
     let files = [];
-    const reg = /(\.ttf|\.eot|\.woff|\.woff2)/gi;
+    const reg = /(\.ttf|\.eot|\.woff|\.woff2)$/gi;
     let output = '';
     let font;
     let options = args[args.length-1];
@@ -29,6 +29,7 @@ module.exports = (args) => {
                         output += '}\n';
                         files.push(file);
                         console.log('Info: added to preload', file);
+                        reg.lastIndex = 0;
                     }
                 });            
             });

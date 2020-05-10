@@ -30,8 +30,6 @@ module.exports = (args) => {
     //back up files and remove link
     let options = args[args.length-1];
     let index = fs.readFileSync('www/'+options.index, 'utf8');
-    let index_back = index;
-    let rem;
 
     const folders = ['js/bin', 'js/views', 'js/controllers', 'js/stages', 'css/bin', 'css/views', 'css/stages']; 
     for(let i = 0; i < folders.length; i++){

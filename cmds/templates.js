@@ -4,7 +4,7 @@ module.exports = (args) => {
     const fs = require('fs');
     const path = 'www/html';
     let files = [];
-    const reg = /(\.html|\.htm)/gi;
+    const reg = /(\.html|\.htm)$/gi;
     let config;
     if(fs.existsSync(path)){
         config = fs.readFileSync('www/app.json', 'utf-8');
@@ -18,8 +18,9 @@ module.exports = (args) => {
             fs.readdirSync(path).forEach(file => {
                 if(reg.test(file)){
                     console.log('Info: added to preload', file);
-                    files.push(file);
+                    files.push(file);                   
                 }
+                reg.lastIndex = 0;
             });
             if(files.length){
                 config.preload['/html'] = files;

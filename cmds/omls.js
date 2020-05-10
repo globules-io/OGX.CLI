@@ -4,7 +4,7 @@ module.exports = (args) => {
     const fs = require('fs');
     const path = 'www/oml';
     let files = [];
-    const reg = /(\.json)/gi;
+    const reg = /(\.oml)$/gi;
     let config;
     if(fs.existsSync(path)){
         config = fs.readFileSync('www/app.json', 'utf-8');
@@ -20,6 +20,7 @@ module.exports = (args) => {
                     console.log('Info: added to preload', file);
                     files.push(file);
                 }
+                reg.lastIndex = 0;
             });
             if(files.length){
                 config.preload['/oml'] = files;
