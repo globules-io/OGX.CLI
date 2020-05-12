@@ -81,6 +81,16 @@ const menus = {
         description : remove a setting from the CLI, if not index
         example     : ogx unset property value
 
+    dev
+        syntax      : ogx dev
+        description : link the dev/debug version of OGX.JS to index
+        example     : ogx dev
+
+    prod
+        syntax      : ogx prod
+        description : link the production version of OGX.JS to index
+        example     : ogx prod
+
     version
         syntax      : ogx version
         description : show the current version of the CLI
