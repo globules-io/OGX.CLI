@@ -11,7 +11,8 @@ module.exports = (args) => {
     }
     const fs = require('fs');
     const filename = args[0]+'.ogx';   
-    let file = fs.readFileSync('./files/'+filename, 'utf-8');
+    let rp =  require('path').resolve(__dirname, '../files/'+filename);
+    let file = fs.readFileSync(rp, 'utf-8');
     file = file.replace(/{{NAME}}/gi, args[1]);
     let links = [];
     let template = false;

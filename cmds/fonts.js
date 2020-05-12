@@ -31,7 +31,7 @@ module.exports = (args) => {
                 files = [];  
                 fs.readdirSync('www'+paths[i]).forEach(folder => {  
                     fs.readdirSync('www'+paths[i]+'/'+folder).forEach(file => {
-                        if(reg.test(file)){
+                        if(reg.test(file) && files.indexOf(file) === -1){
                             font = file.split('.')[0].split('=');
                             output += '@font-face {\n';
                             output += '    font-family:'+font[0]+';\n';
