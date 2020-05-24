@@ -26,6 +26,15 @@ module.exports = (args) => {
                 }
             });
         }
+        //cycle folders in img, 1 level only
+        if(fs.existsSync('www/img')){
+            fs.readdirSync('www/img').forEach(folder => {  
+                let stats = fs.statSync('www/img/'+folder);
+                if(stats.isDirectory()){
+                    paths.push('/img/'+folder);
+                }
+            });
+        }
         for(let i = 0; i < paths.length; i++){
             files = [];
             if(fs.existsSync('www'+paths[i])){
