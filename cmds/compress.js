@@ -144,8 +144,8 @@ module.exports = (args) => {
     }
    
     if(index){
-        index = index.replace('</head>', '<link rel="stylesheet" href="css/min.css">\n</head>');
-        index = index.replace('</head>', '<script type="application/javascript" src="js/min.js"></script>\n</head>');       
+        index = index.replace('</head>', '<link rel="stylesheet" href="css/min/min.css">\n</head>');
+        index = index.replace('</head>', '<script type="application/javascript" src="js/min/min.js"></script>\n</head>');       
         fs.writeFileSync('www/'+options.index, index);
     }
 
