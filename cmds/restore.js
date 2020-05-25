@@ -30,7 +30,7 @@ module.exports = (args) => {
     }
 
     console.log('Info: Restoring js files'); 
-    const folders = ['js/bin', 'js/views', 'js/controllers', 'js/stages', 'css/bin', 'css/views', 'css/stages']; 
+    const folders = ['js/bin', 'js/views', 'js/controllers', 'js/stages']; 
     for(i = 0; i < folders.length; i++){                 
         if(fs.existsSync('ogx/'+folders[i])){   
             if(!fs.existsSync('www/'+folders[i])){
@@ -38,11 +38,8 @@ module.exports = (args) => {
             }          
             fs.readdirSync('ogx/'+folders[i]).forEach(file => {   
                 if(file.indexOf('.min.js') === -1){               
-                    fs.copyFileSync('ogx/'+folders[i]+'/'+file, 'www/'+folders[i]+'/'+file);
-                    if(index){
-                        //remove link from index.html      
-                        index = index.replace('</head>', '<script type="application/javascript" src="'+''+folders[i]+'/'+file+'"></script>\n</head>');
-                    }
+                    fs.copyFileSync('ogx/'+folders[i]+'/'+file, 'www/'+folders[i]+'/'+file);  
+                    index = index.replace('</head>', '<script type="application/javascript" src="'+''+folders[i]+'/'+file+'"></script>\n</head>');                        
                 }
             });   
         }       

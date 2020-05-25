@@ -42,7 +42,14 @@ module.exports = (args) => {
                 files_to_delete.push('www/'+folders[i]+'/'+file);  
                 if(index){
                     //remove link from index.html   
-                    index = index.replace('<script type="application/javascript" src="'+folders[i]+'/'+file+'"></script>\n', '');                    
+                    //bad, could be css here
+                    if(file.indexOf('.js') !== -1){
+                        index = index.replace('<script type="application/javascript" src="'+folders[i]+'/'+file+'"></script>\n', '');     
+                    }else{
+                        if(file.indexOf('.css') !== -1){
+                            index = index.replace('<link rel="stylesheet" href="'+folders[i]+'/'+file+'">\n', '');    
+                        } 
+                    }               
                 }
             });   
         }
@@ -56,7 +63,7 @@ module.exports = (args) => {
         'uglifyjs-folder ogx/js/views -o ogx/js/min/views.min.js',
         'uglifyjs-folder ogx/js/stages -o ogx/js/min/stages.min.js',
         'uglifyjs-folder ogx/js/controllers -o ogx/js/min/controllers.min.js',
-        'uglifyjs-folder ogx/js/bin -o ogx/js/min/main.min.js'
+        'uglifyjs-folder ogx/js/bin -o ogx/js/min/bin.min.js'
     ];
     
     for(let i = 0; i < calls.length; i++){
@@ -82,7 +89,7 @@ module.exports = (args) => {
         }
     }
     if(str.length){
-        fs.writeFileSync('www/js/min/min.js');
+        fs.writeFileSync('www/js/min/min.js', str);
     }else{
         console.log('Warning: No js file to compress');    
     }
