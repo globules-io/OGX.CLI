@@ -1,5 +1,5 @@
 require('Controllers.{{NAME}}', 'Controller');
-OGX.Controllers.MyController = function(){
+OGX.Controllers.{{NAME}} = function(){
     construct(this, 'Controllers.{{NAME}}');
     'use strict';
 
