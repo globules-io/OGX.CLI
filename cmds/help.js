@@ -71,6 +71,11 @@ const menus = {
         description : build the application
         example     : ogx build android
 
+    deploy
+        syntax      : ogx deploy [platform] [build]
+        description : deploys build to device
+        example     : ogx deploy android debug
+
     set
         syntax      : ogx set [property] [value]
         description : change a setting of the CLI, such as the example
