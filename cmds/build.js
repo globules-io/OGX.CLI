@@ -27,7 +27,9 @@ module.exports = (args) => {
             break;
         }
         if(com){
-            exec(com);
+            exec(com, function(error, stdout, stderr) {
+                console.dir(stdout);
+            });
         }
     }else{
         console.log('Error: Invalid platform!');

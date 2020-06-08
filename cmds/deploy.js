@@ -15,7 +15,9 @@ module.exports = (args) => {
             break;
         }
         if(com){
-            exec(com);  
+            exec(com, function(error, stdout, stderr){
+                console.dir(stdout);
+            });  
             let stats = require('fs').statSync('platforms/android/app/build/outputs/apk/'+args[1]+'/app-'+args[1]+'.apk');
             console.log('Info: Build deployed, size '+Math.round(stats.size/1024)+' kb');
         }
