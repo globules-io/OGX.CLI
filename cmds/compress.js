@@ -32,17 +32,21 @@ module.exports = (args) => {
     let index = fs.readFileSync('www/'+options.index, 'utf8');
 
     const folders = ['js/bin', 'js/views', 'js/controllers', 'js/stages', 'css/bin', 'css/views', 'css/stages']; 
+    let to_compress = [];
+    let to_merge = [];
+    let files;
     for(let i = 0; i < folders.length; i++){
         if(!fs.existsSync('ogx/'+folders[i])){
             fs.mkdirSync('ogx/'+folders[i]);
-        }           
-        if(fs.existsSync('www/'+folders[i])){             
-            fs.readdirSync('www/'+folders[i]).forEach(file => {                  
+        } 
+        if(fs.existsSync('www/'+folders[i])){  
+            files = 0;
+            fs.readdirSync('www/'+folders[i]).forEach(file => {      
+                files++;            
                 fs.copyFileSync('www/'+folders[i]+'/'+file, 'ogx/'+folders[i]+'/'+file);
                 files_to_delete.push('www/'+folders[i]+'/'+file);  
                 if(index){
                     //remove link from index.html   
-                    //bad, could be css here
                     if(file.indexOf('.js') !== -1){
                         index = index.replace('<script type="application/javascript" src="'+folders[i]+'/'+file+'"></script>\n', '');     
                     }else{
@@ -51,38 +55,27 @@ module.exports = (args) => {
                         } 
                     }               
                 }
-            });   
+            }); 
+            if(files && folders[i].substr(0, 2) === 'js'){
+                to_compress.push('uglifyjs-folder ogx/'+folders[i]+' -o ogx/js/min/'+folders[i].split('/').pop()+'.min.js');
+                to_merge.push('ogx/js/min/'+folders[i].split('/').pop()+'.min.js');
+            }  
         }
         if(fs.existsSync('www/'+folders[i])){
             folders_to_delete.push('www/'+folders[i]);           
         } 
-    }
-
-    console.log('Info: Compressing js files');
-    const calls = [
-        'uglifyjs-folder ogx/js/views -o ogx/js/min/views.min.js',
-        'uglifyjs-folder ogx/js/stages -o ogx/js/min/stages.min.js',
-        'uglifyjs-folder ogx/js/controllers -o ogx/js/min/controllers.min.js',
-        'uglifyjs-folder ogx/js/bin -o ogx/js/min/bin.min.js'
-    ];
+    }   
     
-    for(let i = 0; i < calls.length; i++){
-        exec(calls[i]);
+    for(let i = 0; i < to_compress.length; i++){
+        exec(to_compress[i]);
     };
 
-    console.log('Info: Moving js files');
-    //should all be in one file in /js
-    const jss = [
-        'ogx/js/min/controllers.min.js',
-        'ogx/js/min/views.min.js',
-        'ogx/js/min/stages.min.js',
-        'ogx/js/min/bin.min.js'
-    ];
+    console.log('Info: Moving js files');    
     let str = '';
     let min;
-    for(let i = 0; i < jss.length; i++){
-        if(fs.existsSync(jss[i])){
-            min = fs.readFileSync(jss[i], 'utf8');
+    for(let i = 0; i < to_merge.length; i++){
+        if(fs.existsSync(to_merge[i])){
+            min = fs.readFileSync(to_merge[i], 'utf8');
             if(min){            
                 str += min+'\n';
             }
@@ -97,7 +90,7 @@ module.exports = (args) => {
     console.log('Info: Compressing css files');    
     const csss = ['css/bin', 'css/views', 'css/stages'];
     str = '';
-    let css; 
+    let css, stats; 
     for(i = 0; i < csss.length; i++){
         if(fs.existsSync('www/'+csss[i])){
             if(!fs.existsSync('ogx/'+csss[i])){
@@ -106,17 +99,23 @@ module.exports = (args) => {
             fs.readdirSync('www/'+csss[i]).forEach(file => {
                 fs.copyFileSync('www/'+csss[i]+'/'+file, 'ogx/'+csss[i]+'/'+file);
                 files_to_delete.push('www/'+csss[i]+'/'+file);   
-                css = fs.readFileSync('ogx/'+csss[i]+'/'+file, 'utf8');
-                if(css){
-                    str += css;                         
-                    if(index){
-                        //remove link from index.html      
-                        index = index.replace('<link rel="stylesheet" href="'+csss[i]+'/'+file+'">\n', '');
+                //skip empty css files create from CLI
+                stats = fs.statSync('ogx/'+csss[i]+'/'+file);
+                if(stats.size){
+                    css = fs.readFileSync('ogx/'+csss[i]+'/'+file, 'utf8');
+                    if(css){
+                        str += css;                         
+                        if(index){
+                            //remove link from index.html      
+                            index = index.replace('<link rel="stylesheet" href="'+csss[i]+'/'+file+'">\n', '');
+                        }
+                    }else{
+                        console.log('Error: Could not read file', 'ogx/'+csss[i]+'/'+file);
+                        return;
                     }
                 }else{
-                    console.log('Error: Could not read file', 'ogx/'+csss[i]+'/'+file);
-                    return;
-                }                       
+                    console.log('Warning: Skipping empty files', 'ogx/'+csss[i]+'/'+file);
+                }                      
             });
         }          
         if(fs.existsSync('www/'+csss[i])){
