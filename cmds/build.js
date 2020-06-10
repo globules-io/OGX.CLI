@@ -8,6 +8,7 @@ module.exports = (args) => {
     }
     if(/(ios|android|windows|mac|linux)/gi.test(args[0])){
         let com = false;
+        let log;
         switch(args[0]){
             case 'ios':
             console.log('Info: Building cordova ios');
@@ -15,11 +16,15 @@ module.exports = (args) => {
             break;
 
             case 'android':
-            console.log('Info: Building cordova android');
+            log = 'Info: Building cordova android';           
             com = 'cordova build android';
-            if(args[2] && args[2] === 'release'){
+            if(args[1] && args[1] === 'release'){
                 com += ' --release -- --packageType=bundle';
+                log += ' release';
+            }else{
+                log += ' debug';
             }
+            console.log(log);
             break;
 
             case 'desktop':
