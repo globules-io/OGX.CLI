@@ -1,8 +1,7 @@
 require('Views.{{NAME}}', 'View');
-OGX.Views.MyView = function(__config){
+OGX.Views.{{NAME}} = function(__config){
     construct(this, 'Views.{{NAME}}');
-	'use strict';
-	var that = this;    
+	'use strict'; 
 
     //@Override
     this.construct = function(__data, __route_data){};
