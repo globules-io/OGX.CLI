@@ -13,6 +13,11 @@ OGX.Controllers.{{NAME}} = function(){
 	this.disable = function(){};
     
     //@Override
-    this.ux = function(){};    
-     
+	this.ux = function(__bool){
+        if(__bool){
+            
+        }else{
+           
+        }
+	};     
 };
