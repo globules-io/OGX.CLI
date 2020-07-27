@@ -16,48 +16,58 @@ module.exports = (args) => {
         if(index){
             if(['all', 'controllers'].indexOf(args[0]) !== -1){               
                 fs.readdirSync('www/js/controllers').forEach(file => {  
-                    if(index.indexOf('<script type="application/javascript" src="js/controllers/'+file+'">') === -1){                
-                        index = index.replace('</head>', '<script type="application/javascript" src="js/controllers/'+file+'"></script>\n</head>');  
+                    if(/\.js$/.test(file)){
+                        if(index.indexOf('<script type="application/javascript" src="js/controllers/'+file+'">') === -1){                
+                            index = index.replace('</head>', '<script type="application/javascript" src="js/controllers/'+file+'"></script>\n</head>');  
+                        }
+                        console.log('Info: linked', file);
                     }
-                    console.log('Info: linked', file);
                 });
             }  
             if(['all', 'views'].indexOf(args[0]) !== -1){               
-                fs.readdirSync('www/js/views').forEach(file => {      
-                    if(index.indexOf('<script type="application/javascript" src="js/views/'+file+'">') === -1){                            
-                        index = index.replace('</head>', '<script type="application/javascript" src="js/views/'+file+'"></script>\n</head>');  
+                fs.readdirSync('www/js/views').forEach(file => {   
+                    if(/\.js$/.test(file)){   
+                        if(index.indexOf('<script type="application/javascript" src="js/views/'+file+'">') === -1){                            
+                            index = index.replace('</head>', '<script type="application/javascript" src="js/views/'+file+'"></script>\n</head>');  
+                        }
+                        if(index.indexOf('<link rel="stylesheet" href="css/views/view.'+file.split('.')[1]+'.css">') === -1){     
+                            index = index.replace('</head>', '<link rel="stylesheet" href="css/views/view.'+file.split('.')[1]+'.css">\n</head>'); 
+                        }
+                        console.log('Info: linked', file);
                     }
-                    if(index.indexOf('<link rel="stylesheet" href="css/views/view.'+file.split('.')[1]+'.css">') === -1){     
-                        index = index.replace('</head>', '<link rel="stylesheet" href="css/views/view.'+file.split('.')[1]+'.css">\n</head>'); 
-                    }
-                    console.log('Info: linked', file);
                 });
             }             
             if(['all', 'stages'].indexOf(args[0]) !== -1){   
                 fs.readdirSync('www/js/stages').forEach(file => {   
-                    if(index.indexOf('<script type="application/javascript" src="js/stages/'+file+'">') === -1){                              
-                        index = index.replace('</head>', '<script type="application/javascript" src="js/stages/'+file+'"></script>\n</head>');  
+                    if(/\.js$/.test(file)){
+                        if(index.indexOf('<script type="application/javascript" src="js/stages/'+file+'">') === -1){                              
+                            index = index.replace('</head>', '<script type="application/javascript" src="js/stages/'+file+'"></script>\n</head>');  
+                        }
+                        if(index.indexOf('<link rel="stylesheet" href="css/stages/stage.'+file.split('.')[1]+'.css">') === -1){            
+                            index = index.replace('</head>', '<link rel="stylesheet" href="css/stages/stage.'+file.split('.')[1]+'.css">\n</head>'); 
+                        }
+                        console.log('Info: linked', file);
                     }
-                    if(index.indexOf('<link rel="stylesheet" href="css/stages/stage.'+file.split('.')[1]+'.css">') === -1){            
-                        index = index.replace('</head>', '<link rel="stylesheet" href="css/stages/stage.'+file.split('.')[1]+'.css">\n</head>'); 
-                    }
-                    console.log('Info: linked', file);
                 });       
             } 
             if(['all', 'css'].indexOf(args[0]) !== -1){   
                 fs.readdirSync('www/css/bin').forEach(file => {   
-                    if(index.indexOf('<link rel="stylesheet" href="css/bin/'+file+'">') === -1){                           
-                        index = index.replace('</head>', '<link rel="stylesheet" href="css/bin/'+file+'">\n</head>');  
-                     }
-                    console.log('Info: linked', file);
+                    if(/\.css$/.test(file)){
+                        if(index.indexOf('<link rel="stylesheet" href="css/bin/'+file+'">') === -1){                           
+                            index = index.replace('</head>', '<link rel="stylesheet" href="css/bin/'+file+'">\n</head>');  
+                        }
+                        console.log('Info: linked', file);
+                    }
                 });       
             }
             if(['all', 'js'].indexOf(args[0]) !== -1){   
                 fs.readdirSync('www/js/bin').forEach(file => {   
-                    if(index.indexOf('<script type="application/javascript" src="js/bin/'+file+'">') === -1){                              
-                        index = index.replace('</head>', '<script type="application/javascript" src="js/bin/'+file+'"></script>\n</head>');  
+                    if(/\.js$/.test(file)){
+                        if(index.indexOf('<script type="application/javascript" src="js/bin/'+file+'">') === -1){                              
+                            index = index.replace('</head>', '<script type="application/javascript" src="js/bin/'+file+'"></script>\n</head>');  
+                        }
+                        console.log('Info: linked', file);
                     }
-                    console.log('Info: linked', file);
                 });       
             }   
             fs.writeFileSync('www/'+index_file, index);    
