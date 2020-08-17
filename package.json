@@ -1,6 +1,6 @@
 {
   "name": "@globules-io/ogx.cli",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "OGX CLI for OGX.JS",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/globules-io/OGX.CLI#readme",
   "dependencies": {
-    "@globules-io/ogx.js": "^1.2.8",
+    "@globules-io/ogx.js": "^1.2.10",
     "child_process": "^1.0.2",
     "csso": "^4.0.3",
     "fs": "0.0.1-security",
