@@ -2,11 +2,11 @@
 
 module.exports = (args) => {
     const fs = require('fs');
-    if(!fs.existsSync('www/css/bin/stages')){
-        fs.mkdirSync('www/css/bin/stages', {recursive:true});            
+    if(!fs.existsSync('www/css/stages')){
+        fs.mkdirSync('www/css/stages', {recursive:true});            
     }
-    if(!fs.existsSync('www/css/bin/views')){
-        fs.mkdirSync('www/css/bin/views', {recursive:true});            
+    if(!fs.existsSync('www/css/views')){
+        fs.mkdirSync('www/css/views', {recursive:true});            
     }
     if(!fs.existsSync('www/css/lib')){
         fs.mkdirSync('www/css/lib', {recursive:true});            
