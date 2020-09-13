@@ -5,6 +5,11 @@ const menus = {
     ogx [command] <options>
 
     commands :
+    init
+        syntax      : ogx init
+        description : create directory structure
+        example     : ogx init
+
     create
         syntax      : ogx create [type] [id] 
         description : create an object (view, controller, template, stage)
