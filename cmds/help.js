@@ -10,6 +10,15 @@ const menus = {
         description : create directory structure
         example     : ogx init
 
+    update
+        syntax      : ogx update [--force]
+        description : install the latest version of OGX.JS
+        example     : ogx init
+
+    version
+        syntax      : ogx version
+        description : show the installed and latest version of OGX.CLI and OGX.JS
+
     create
         syntax      : ogx create [type] [id] 
         description : create an object (view, controller, template, stage)
@@ -106,9 +115,7 @@ const menus = {
         description : link the production version of OGX.JS to index
         example     : ogx prod
 
-    version
-        syntax      : ogx version
-        description : show the current version of the CLI
+    
 
     help
         syntax      : ogx help [optional_command]
