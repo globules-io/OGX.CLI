@@ -115,7 +115,15 @@ const menus = {
         description : link the production version of OGX.JS to index
         example     : ogx prod
 
-    
+    encrypt
+        syntax      : ogx encrypt [key]
+        description : encrypts app.json
+        example     : ogx encrypt secretkey
+
+    decrypt
+        syntax      : ogx decrypt [key]
+        description : decrypts app.json
+        example     : ogx decrypt secretkey
 
     help
         syntax      : ogx help [optional_command]

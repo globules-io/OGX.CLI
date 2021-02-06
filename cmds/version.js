@@ -36,7 +36,7 @@ module.exports = (args) => {
             console.log('Latest    : OGX.JS', chalk.blue(latest));    
         }  
     }else{
-        console.log('Status : No installed');
+        console.log('Status : Not installed');
         console.log('Latest : OGX.JS', chalk.blue(latest));    
     }    
 }
