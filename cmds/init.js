@@ -33,12 +33,14 @@ module.exports = (args) => {
     const src_lib = path.normalize(__dirname+'./../../js/lib');
     const dest_lib = path.normalize(__dirname+'./../../js/lib');
     fs.readdir(src_lib, (err, files) => {
-        files.forEach(file => {
-            if(!fs.existsSync(dest_lib+'/'+file)){
-                fs.copySync(src_lib+'/'+file, dest_lib+'/'+file);
-            }else{
-                console.log(dest_lib+'/'+file+' already exists, skipping');
-            }
-        });
+        if(files){
+            files.forEach(file => {
+                if(!fs.existsSync(dest_lib+'/'+file)){
+                    fs.copySync(src_lib+'/'+file, dest_lib+'/'+file);
+                }else{
+                    console.log(dest_lib+'/'+file+' already exists, skipping');
+                }
+            });
+        }
     });
 };
