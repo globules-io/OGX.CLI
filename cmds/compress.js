@@ -144,7 +144,7 @@ module.exports = (args) => {
     if(folders_to_delete.length){
         for(i = 0; i < folders_to_delete.length; i++){
             if(fs.existsSync(folders_to_delete[i])){
-                fs.rmdirSync(folders_to_delete[i], {recursive:true});     
+                fs.rmSync(folders_to_delete[i], {recursive:true});     
             }
         } 
     }
