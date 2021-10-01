@@ -30,6 +30,21 @@ module.exports = (args) => {
     if(!fs.existsSync('www/js/lib')){
         fs.mkdirSync('www/js/lib', {recursive:true});            
     }
+    if(!fs.existsSync('www/oml')){
+        fs.mkdirSync('www/oml', {recursive:true});            
+    }
+    if(!fs.existsSync('www/json')){
+        fs.mkdirSync('www/json', {recursive:true});            
+    }
+    if(!fs.existsSync('www/img')){
+        fs.mkdirSync('www/img', {recursive:true});            
+    }
+    if(!fs.existsSync('www/fonts')){
+        fs.mkdirSync('www/fonts', {recursive:true});            
+    }
+    if(!fs.existsSync('www/html')){
+        fs.mkdirSync('www/html', {recursive:true});            
+    }
     const src_lib = path.normalize(__dirname+'./../../js/lib');
     const dest_lib = path.normalize(__dirname+'./../../js/lib');
     fs.readdir(src_lib, (err, files) => {
