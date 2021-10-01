@@ -132,9 +132,10 @@ const menus = {
     `,
 
     create: `   
-    syntax : ogx create [type] [id] 
-    type   : type of object (view, controller, template or stage)
-    id     : id of object`,
+    syntax   : ogx create [type] [id] [template]
+    type     : type of object (view, controller, template or stage)
+    id       : id of object
+    template : optional template (view and stage only)`,
 
     delete: `
     syntax : ogx create [type] [id] ogx   
