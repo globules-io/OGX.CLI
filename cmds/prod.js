@@ -8,7 +8,7 @@ module.exports = (args) => {
         fs.writeFileSync('cli.json', JSON.stringify(options));
         let index = fs.readFileSync('www/'+options.index, 'utf-8');
         if(index){
-            index = index.replace('<script type="text/javascript" src="js/lib/globules/ogx.dev.min.js"></script>', '<script type="text/javascript" src="js/lib/globules/ogx.min.js"></script>');
+            index = index.replace('<script type="application/javascript" src="js/lib/globules/ogx.dev.min.js"></script>', '<script type="application/javascript" src="js/lib/globules/ogx.min.js"></script>');
             fs.writeFileSync('www/'+options.index, index); 
         }
     }
