@@ -35,7 +35,7 @@ module.exports = (args) => {
 
     function deleteTemplate(__name){
         let filename = 'template.'+__name+'.html';  
-        let filepath = '/www/html/'+filename;       
+        let filepath = 'www/html/'+filename;       
         let config = loadConfig();
         if(config){
             let idx = config.preload['/html'].indexOf(filename);
