@@ -24,6 +24,11 @@ const menus = {
         description : create an object (view, controller, template, stage)
         example     : ogx create template myTemplate
 
+    rename
+        syntax      : ogx rename [type] [name] [new_name] 
+        description : rename an object (view, controller, template, stage)
+        example     : ogx rename template myTemplate newTemplate
+
     delete
         syntax      : ogx delete [type] [id] 
         description : delete an object (view, controller, template, stage)
