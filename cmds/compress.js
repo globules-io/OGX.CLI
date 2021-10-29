@@ -6,7 +6,7 @@ module.exports = (args) => {
     let files_to_delete = [];
     let folders_to_delete = [];
     
-    if(fs.existsSync('ogx')){
+    if(fs.existsSync('ogx/js')){
         console.log('Error: Already minified!');
         return;
     }

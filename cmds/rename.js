@@ -23,13 +23,17 @@ module.exports = (args) => {
         break;
 
         case 'stage':
-        renameStage(args[1], args[2]);
-        updateLink(args, 'stage.'+args[1]+'.js', 'stage.'+args[2]+'.js');
+        rn = renameStage(args[1], args[2]);
+        if(rn){
+            updateLink(args, 'stage.'+args[1]+'.js', 'stage.'+args[2]+'.js');
+        }
         break;
 
         case 'controller':
-        renameController(args[1], args[2]);
-        updateLink(args, 'controller.'+args[1]+'.js', 'controller.'+args[2]+'.js');
+        rn = renameController(args[1], args[2]);
+        if(rn){
+            updateLink(args, 'controller.'+args[1]+'.js', 'controller.'+args[2]+'.js');
+        }
         break;
     }
 
