@@ -3,6 +3,7 @@
 module.exports = (args) => {
     const fs = require('fs');
     const exec = require('child_process').execSync;
+    const csso = require('csso');
     let files_to_delete = [];
     let folders_to_delete = [];
     
@@ -122,18 +123,14 @@ module.exports = (args) => {
             folders_to_delete.push('www/'+csss[i]);     
         }       
     }
-    if(str.length){
-        fs.writeFileSync('ogx/css/__bundle.css', str);
-        exec('csso -i ogx/css/__bundle.css -o www/css/min/min.css');
+    if(str.length){   
+        const res = csso.minify(str);
+        fs.writeFileSync('www/css/min/min.css', res.css); 
     }else{
         console.log('Warning: No css file to compress');    
     }
 
-    console.log('Info: Cleaning up');   
-    if(str.length){
-        fs.unlinkSync('ogx/css/__bundle.css');
-    }
-   
+    console.log('Info: Cleaning up');  
     if(files_to_delete.length){
         for(i = 0; i < files_to_delete.length; i++){
             if(fs.existsSync(files_to_delete[i])){

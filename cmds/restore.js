@@ -17,14 +17,12 @@ module.exports = (args) => {
             if(!fs.existsSync('www/'+csss[i])){
                 fs.mkdirSync('www/'+csss[i], {recursive:true});
             }   
-            fs.readdirSync('ogx/'+csss[i]).forEach(file => {
-                if(file.indexOf('__bundle.css') === -1){               
-                    fs.copyFileSync('ogx/'+csss[i]+'/'+file, 'www/'+csss[i]+'/'+file);
-                    if(index){
-                        //remove link from index.html      
-                        index = index.replace('</head>', '<link rel="stylesheet" href="'+csss[i]+'/'+file+'">\n</head>');
-                    }
-                }            
+            fs.readdirSync('ogx/'+csss[i]).forEach(file => {                          
+                fs.copyFileSync('ogx/'+csss[i]+'/'+file, 'www/'+csss[i]+'/'+file);
+                if(index){
+                    //remove link from index.html      
+                    index = index.replace('</head>', '<link rel="stylesheet" href="'+csss[i]+'/'+file+'">\n</head>');
+                }                         
             }); 
         }       
     }
@@ -56,7 +54,7 @@ module.exports = (args) => {
         fs.unlinkSync('www/js/min/min.js');
         fs.rmSync('www/js/min', {recursive:true});
     }
-    if(fs.existsSync('www/css/min/.css')){
+    if(fs.existsSync('www/css/min/min.css')){
         fs.unlinkSync('www/css/min/min.css');
         fs.rmSync('www/css/min', {recursive:true});
     }

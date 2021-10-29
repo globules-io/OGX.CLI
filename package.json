@@ -1,6 +1,6 @@
 {
   "name": "@globules-io/ogx.cli",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "OGX CLI for OGX.JS",
   "repository": {
     "type": "git",
@@ -30,7 +30,6 @@
     "compare-versions": "^3.6.0",
     "crypto-js": "^4.0.0",
     "csso": "^4.0.3",
-    "csso-cli": "^3.0.0",
     "fs": "0.0.1-security",
     "fs-extra": "^9.0.1",
     "node-cmd": "^4.0.0",
