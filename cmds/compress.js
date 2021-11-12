@@ -48,10 +48,10 @@ module.exports = (args) => {
                 files_to_delete.push('www/'+folders[i]+'/'+file);  
                 if(index){
                     //remove link from index.html   
-                    if(file.indexOf('.js') !== -1){
+                    if(file.includes('.js')){
                         index = index.replace('<script type="application/javascript" src="'+folders[i]+'/'+file+'"></script>\n', '');     
                     }else{
-                        if(file.indexOf('.css') !== -1){
+                        if(file.includes('.css')){
                             index = index.replace('<link rel="stylesheet" href="'+folders[i]+'/'+file+'">\n', '');    
                         } 
                     }               

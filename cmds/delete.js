@@ -119,7 +119,7 @@ module.exports = (args) => {
         let file = fs.readFileSync('www/'+options.index, 'utf-8');
         if(file){
             for(let i = 0; i < links.length; i++){
-                if(file.indexOf(links[i]) !== -1){
+                if(file.includes(links[i])){
                     file = file.replace(links[i], '');                    
                     console.log('Unlinked File:', links[i]);  
                 }else{

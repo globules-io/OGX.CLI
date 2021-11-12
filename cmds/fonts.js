@@ -31,7 +31,7 @@ module.exports = (args) => {
                 files = [];  
                 fs.readdirSync('www'+paths[i]).forEach(folder => {  
                     fs.readdirSync('www'+paths[i]+'/'+folder).forEach(file => {
-                        if(reg.test(file) && files.indexOf(file) === -1){
+                        if(reg.test(file) && !files.includes(file)){
                             font = file.split('.')[0].split('=');
                             output += '@font-face {\n';
                             output += '    font-family:'+font[0]+';\n';
@@ -64,7 +64,7 @@ module.exports = (args) => {
             fs.writeFileSync('www/css/bin/fonts.css', output);               
             if(fs.existsSync('www/'+options.index)){
                 let index = fs.readFileSync('www/'+options.index, 'utf8');
-                if(index.indexOf('<link href="css/bin/fonts.css" rel="stylesheet" type="text/css">') === -1){
+                if(!index.includes('<link href="css/bin/fonts.css" rel="stylesheet" type="text/css">')){
                     index = index.replace('</head>', '<link href="css/bin/fonts.css" rel="stylesheet" type="text/css">\n</head>');
                     fs.writeFileSync('www/'+options.index, index);
                 }

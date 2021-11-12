@@ -35,7 +35,7 @@ module.exports = (args) => {
                 fs.mkdirSync('www/'+folders[i], {recursive:true});
             }          
             fs.readdirSync('ogx/'+folders[i]).forEach(file => {   
-                if(file.indexOf('.min.js') === -1){               
+                if(!file.includes('.min.js')){               
                     fs.copyFileSync('ogx/'+folders[i]+'/'+file, 'www/'+folders[i]+'/'+file);  
                     index = index.replace('</head>', '<script type="application/javascript" src="'+''+folders[i]+'/'+file+'"></script>\n</head>');                        
                 }
