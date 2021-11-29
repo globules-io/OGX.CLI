@@ -19,6 +19,7 @@ module.exports = (args) => {
         rn = renameView(args[1], args[2]);
         if(rn){
             updateLink(args, 'view.'+args[1]+'.js', 'view.'+args[2]+'.js');
+            updateLink(args, 'view.'+args[1]+'.css', 'view.'+args[2]+'.css');
         }
         break;
 
