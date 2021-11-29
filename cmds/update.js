@@ -20,7 +20,7 @@ module.exports = (args) => {
             if(pkg.dependencies.hasOwnProperty('@globules-io/ogx.js')){
                 install = false;
                 console.log('Info: updating OGX.JS '+latest);
-                cmd.runSync('npm uninstall @globules-io/ogx.js@');
+                cmd.runSync('npm uninstall @globules-io/ogx.js');
                 cmd.runSync('npm install @globules-io/ogx.js@'+latest);
             }
         }
