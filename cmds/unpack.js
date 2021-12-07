@@ -4,7 +4,7 @@ module.exports = (args) => {
         console.log('Error: Missing arguments! Expected [type]');
         return;
     }
-    if(!/(template)/gi.test(args[0])){
+    if(!/(templates|omls|jsons)/gi.test(args[0])){
         console.log('Error: Invalid object!');
         return;
     }
@@ -12,12 +12,23 @@ module.exports = (args) => {
 
     switch(args[0]){
         case 'templates':
-        unpackTemplates();        
+        unpack('html');   
+        console.log('Info: unpacked templates');     
+        break;
+
+        case 'jsons':
+        unpack('json');
+        console.log('Info: unpacked jsons');
+        break;
+
+        case 'omls':
+        unpack('oml');
+        console.log('Info: unpacked omls');
         break;
     }
 
-    function unpackTemplates(){
-        const pak = fs.readFileSync('www/html/templates.pak', 'utf-8');
+    function unpack(__type){
+        const pak = fs.readFileSync('www/'+__type+'/'+__type+'.pak', 'utf-8');
         if(pak){
             //extract names
             let m;
@@ -33,15 +44,22 @@ module.exports = (args) => {
             //write
             let config = fs.readFileSync('www/app.json', 'utf-8');
             config = JSON.parse(config);
-            config.preload['/html'] = [];     
-            let i;
-            for(i = 0; i < names.length; i++){
-               fs.writeFileSync('www/html/template.'+names[i]+'.html', content[i]);
-               config.preload['/html'].push('template.'+names[i]+'.html');
+            config.preload['/'+__type] = [];     
+            let i, filename;
+            for(i = 0; i < names.length; i++){                
+                switch(__type){
+                    case 'html':
+                    filename = 'template.'+names[i]+'.html';
+                    break;
+
+                    default:
+                    filename = names[i]+'.'+__type;
+                } 
+                fs.writeFileSync('www/'+__type+'/'+filename, content[i]);
+                config.preload['/'+__type].push(filename);
             } 
             fs.writeFileSync('www/app.json', JSON.stringify(config, null, 4));
-            fs.unlinkSync('www/html/templates.pak');
+            fs.unlinkSync('www/'+__type+'/'+__type+'.pak');
         }        
-        console.log('Info: unpacked templates');
-    }
+    }    
 }

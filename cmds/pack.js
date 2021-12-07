@@ -4,7 +4,7 @@ module.exports = (args) => {
         console.log('Error: Missing arguments! Expected [type]');
         return;
     }
-    if(!/(template)/gi.test(args[0])){
+    if(!/(templates|jsons|omls)/gi.test(args[0])){
         console.log('Error: Invalid object!');
         return;
     }
@@ -12,34 +12,45 @@ module.exports = (args) => {
 
     switch(args[0]){
         case 'templates':
-        packTemplates();        
+        pack('html');   
+        console.log('Info: packed templates');     
+        break;
+
+        case 'jsons':
+        pack('json');
+        console.log('Info: packed jsons');
+        break;
+
+        case 'omls':
+        pack('oml');
+        console.log('Info: packed omls');
         break;
     }
 
-    function packTemplates(){
+    function pack(__type){
         let html = '';
         let to_unlink = [];
         let content, name;
-        fs.readdirSync('www/html').forEach(file => {  
-            if(/\.html$/.test(file)){
-                content = fs.readFileSync('www/html/'+file, 'utf-8');
+        const reg = new RegExp('\\.'+__type+'$', 'i');
+        fs.readdirSync('www/'+__type).forEach(file => {  
+            if(reg.test(file)){
+                content = fs.readFileSync('www/'+__type+'/'+file, 'utf-8');
                 if(content){
                     name = file.split('.');
-                    name = name[1];
+                    __type === 'html' ? name = name[1] : name = name[0];
                     html += '<!--['+name+']-->'+content;
-                    to_unlink.push('www/html/'+file);
+                    to_unlink.push('www/'+__type+'/'+file);
                 }               
             }
         });
-        fs.writeFileSync('www/html/templates.pak', html);      
+        fs.writeFileSync('www/'+__type+'/'+__type+'.pak', html);      
         let i;
         for(i = 0; i < to_unlink.length; i++){
             fs.unlinkSync(to_unlink[i]);
         }        
         let config = fs.readFileSync('www/app.json', 'utf-8');
         config = JSON.parse(config);
-        config.preload['/html'] = ['templates.pak'];
+        config.preload['/'+__type] = [__type+'.pak'];
         fs.writeFileSync('www/app.json', JSON.stringify(config, null, 4));
-        console.log('Info: packed templates');
-    }
+    }    
 }
