@@ -130,6 +130,16 @@ const menus = {
         description : decrypts app.json
         example     : ogx decrypt secretkey
 
+    pack
+        syntax      : ogx pack [type]
+        description : packs multiple files into one
+        example     : ogx pack templates
+
+    unpack
+        syntax      : ogx unpack [type]
+        description : unpacks multiple files
+        example     : ogx unpack templates
+
     help
         syntax      : ogx help [optional_command]
         description : show the help menu
