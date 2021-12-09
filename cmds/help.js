@@ -163,7 +163,15 @@ const menus = {
 
     unlink: `
     syntax : ogx unlink [type] 
-    type   : type of object (js, css, views, controllers or stages)`
+    type   : type of object (js, css, views, controllers or stages)`,
+
+    pack: `
+    syntax : ogx pack [type] 
+    type   : type of object (templates, jsons, omls or all)`,
+
+    unpack: `
+    syntax : ogx unpack [type] 
+    type   : type of object (templates, jsons, omls or all)`
 };
 
 module.exports = (args) => {   

@@ -4,7 +4,7 @@ module.exports = (args) => {
         console.log('Error: Missing arguments! Expected [type]');
         return;
     }
-    if(!/(templates|omls|jsons)/gi.test(args[0])){
+    if(!/(templates|omls|jsons|all)/gi.test(args[0])){
         console.log('Error: Invalid object!');
         return;
     }
@@ -24,6 +24,13 @@ module.exports = (args) => {
         case 'omls':
         unpack('oml');
         console.log('Info: unpacked omls');
+        break;
+
+        case 'all':
+        unpack('html');   
+        unpack('json');
+        unpack('oml');
+        console.log('Info: unpacked templates, jsons and omls');
         break;
     }
 
