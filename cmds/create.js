@@ -124,6 +124,10 @@ module.exports = (args) => {
     function createTemplate(__name){
         let path = '/html';  
         let file = 'template.'+__name+'.html'; 
+        if(fs.existsSync('www/html/'+file)){
+            console.log('Warning: template', file, 'already exists!');
+            return;
+        }
         fs.writeFileSync('www/html/'+file, '<span></span>'); 
         let config = loadConfig();
         if(config){   
