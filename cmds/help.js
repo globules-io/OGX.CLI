@@ -140,10 +140,15 @@ const menus = {
         description : unpacks multiple files
         example     : ogx unpack templates
 
+    purge
+        syntax      : ogx unpack [type]
+        description : unpacks multiple files
+        example     : ogx unpack templates
+
     help
-        syntax      : ogx help [optional_command]
-        description : show the help menu
-        example     : ogx help create
+        syntax      : ogx purge [type]
+        description : looks for unused files and deletes them
+        example     : ogx purge images
     `,
 
     create: `   
@@ -171,7 +176,11 @@ const menus = {
 
     unpack: `
     syntax : ogx unpack [type] 
-    type   : type of object (templates, jsons, omls or all)`
+    type   : type of object (templates, jsons, omls or all)`,
+
+    purge: `
+    syntax : ogx purge [type] 
+    type   : type of object (stages, views, templates, controller, images or all)`
 };
 
 module.exports = (args) => {   
