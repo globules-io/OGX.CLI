@@ -201,7 +201,7 @@ module.exports = (args) => {
         let controller;
         for(let i = 0; i < files.length; i++){
             controller = files[i];  
-            controller = fs.readFileSync('www/js/stages/'+controller, 'utf-8');
+            controller = fs.readFileSync('www/js/controllers/'+controller, 'utf-8');
             if(__reg.test(controller)){
                 return true;
             }
