@@ -81,7 +81,7 @@ const menus = {
         example     : ogx link all
 
     prepare
-        syntax      : ogx prepare
+        syntax      : ogx prepare [optional type or subcommand]
         description : links all files and set the preload
         example     : ogx prepare
 
@@ -161,6 +161,16 @@ const menus = {
     syntax : ogx create [type] [id] ogx   
     type   : type of object (view, controller, template or stage)
     id     : id of object`,
+
+    prepare: `
+    syntax     : ogx prepare [type or subcommand] [flags]
+    type       : type of object (jsons, omls, images, templates, fonts)
+    subcommand : skip clear
+    flags      : --save --reset
+    example    : ogx prepare skip images --save
+    example    : ogx prepare skip --reset
+    example    : ogx prepare clear
+    `,
 
     link: `
     syntax : ogx link [type] 
