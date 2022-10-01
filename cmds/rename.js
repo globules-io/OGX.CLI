@@ -12,7 +12,13 @@ module.exports = (args) => {
     let rn;
     switch(args[0]){
         case 'template':
-        renameTemplate(args[1], args[2]);
+        rn = renameTemplate(args[1], args[2]);
+        if(rn){
+            //if we just pass "MyTemplate" , it's dangerous cause It needs to be exact ex
+            //rename Class Classe but I have ClassManager 
+            // "Class" or Views.Class
+            renameInAllFiles('Template', args[1], args[2]);
+        }
         break;
 
         case 'view':
@@ -20,6 +26,7 @@ module.exports = (args) => {
         if(rn){
             updateLink(args, 'view.'+args[1]+'.js', 'view.'+args[2]+'.js');
             updateLink(args, 'view.'+args[1]+'.css', 'view.'+args[2]+'.css');
+            renameInAllFiles('View', args[1], args[2]);
         }
         break;
 
@@ -27,6 +34,7 @@ module.exports = (args) => {
         rn = renameStage(args[1], args[2]);
         if(rn){
             updateLink(args, 'stage.'+args[1]+'.js', 'stage.'+args[2]+'.js');
+            renameInAllFiles('Stage', args[1], args[2]);
         }
         break;
 
@@ -34,6 +42,7 @@ module.exports = (args) => {
         rn = renameController(args[1], args[2]);
         if(rn){
             updateLink(args, 'controller.'+args[1]+'.js', 'controller.'+args[2]+'.js');
+            renameInAllFiles('Controller', args[1], args[2]);
         }
         break;
     }
@@ -120,6 +129,43 @@ module.exports = (args) => {
         }
         console.log('Info: Controller renamed from', __oldname, 'to', __newname); 
         return true;
+    }    
+
+    function renameInAllFiles(__object_type, __old_name, __name){
+        const paths = ['www/json', 'www/oml', 'www/js/views', 'www/js/stages', 'www/js/controllers'];
+        const exts = ['.json', '.oml', '.js', '.js', '.js'];
+        for(let i = 0; i < paths.length; i++){
+            renameInFiles(paths[i], exts[i], __object_type, __old_name, __name);
+        }
+        renameInFile('www/app.json', __object_type, __old_name, __name);
+    }
+
+    function renameInFiles(__path, __file_ext, __object_type, __old_name, __name){
+        if(!fs.existsSync(__path)){
+            console.log('Warning: path not found', __path); 
+            return;
+        }       
+        fs.readdirSync(__path).forEach(file => {  
+            if(file.indexOf(__file_ext) !== -1){
+                renameInFile(__path+'/'+file, __object_type, __old_name, __name);                
+            }
+        });
+    }
+
+    function renameInFile(__filepath, __object_type, __old_name, __name){
+        if(!fs.existsSync(__filepath)){
+            console.log('Warning: file not found', __filepath); 
+            return;
+        }
+        let str = fs.readFileSync(__filepath, 'utf8');
+        if(str){ 
+            str = str.replaceAll(__object_type+'s.'+__old_name, __object_type+'s.'+__name);
+            if(__object_type === 'Template'){
+                const reg = new RegExp('("template" ?: ?)("'+__old_name+'")', 'g');
+                str = str.replace(reg, '$1'+'"'+__name+'"');
+            }                   
+            fs.writeFileSync(__filepath, str);
+        }
     }
 
     function updateLink(__args, __oldname, __newname){
