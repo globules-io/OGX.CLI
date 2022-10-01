@@ -14,9 +14,6 @@ module.exports = (args) => {
         case 'template':
         rn = renameTemplate(args[1], args[2]);
         if(rn){
-            //if we just pass "MyTemplate" , it's dangerous cause It needs to be exact ex
-            //rename Class Classe but I have ClassManager 
-            // "Class" or Views.Class
             renameInAllFiles('Template', args[1], args[2]);
         }
         break;
