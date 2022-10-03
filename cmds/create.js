@@ -111,6 +111,7 @@ module.exports = (args) => {
                     template:t,
                     use:false,
                     home:'',
+                    placeholder:'',
                     scope:['public'],
                     theater:false
                 }
