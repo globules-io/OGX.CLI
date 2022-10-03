@@ -2,7 +2,6 @@
 
 module.exports = (args) => {
     const fs = require('fs-extra');
-    const path = require('path');
     if(!fs.existsSync('www/css/stages')){
         fs.mkdirSync('www/css/stages', {recursive:true});            
     }
@@ -45,17 +44,4 @@ module.exports = (args) => {
     if(!fs.existsSync('www/html')){
         fs.mkdirSync('www/html', {recursive:true});            
     }
-    const src_lib = path.normalize(__dirname+'./../../js/lib');
-    const dest_lib = path.normalize(__dirname+'./../../js/lib');
-    fs.readdir(src_lib, (err, files) => {
-        if(files){
-            files.forEach(file => {
-                if(!fs.existsSync(dest_lib+'/'+file)){
-                    fs.copySync(src_lib+'/'+file, dest_lib+'/'+file);
-                }else{
-                    console.log(dest_lib+'/'+file+' already exists, skipping');
-                }
-            });
-        }
-    });
 };
