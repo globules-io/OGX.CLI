@@ -22,15 +22,15 @@ module.exports = (args) => {
         if(fs.existsSync('www/themes')){
             fs.readdirSync('www/themes').forEach(folder => {  
                 if(fs.existsSync('www/themes/'+folder+'/base/fonts')){
-                    paths.push('/themes/'+folder+'/base/fonts');
+                    paths.push('themes/'+folder+'/base/fonts');
                 }
             });
         }
         for(let i = 0; i < paths.length; i++){           
-            if(fs.existsSync('www'+paths[i])){       
+            if(fs.existsSync('www/'+paths[i])){       
                 files = [];  
-                fs.readdirSync('www'+paths[i]).forEach(folder => {  
-                    fs.readdirSync('www'+paths[i]+'/'+folder).forEach(file => {
+                fs.readdirSync('www/'+paths[i]).forEach(folder => {  
+                    fs.readdirSync('www/'+paths[i]+'/'+folder).forEach(file => {
                         if(reg.test(file) && !files.includes(file)){
                             font = file.split('.')[0].split('=');
                             output += '@font-face {\n';
