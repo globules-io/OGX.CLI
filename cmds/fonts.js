@@ -4,7 +4,7 @@ expected [name]-[type].[ext], ie roboto-regular.tff
 */
 module.exports = (args) => {
     const fs = require('fs');
-    const paths = ['/fonts'];
+    const paths = ['fonts'];
     let files = [];
     const reg = /(\.ttf|\.eot|\.woff|\.woff2)$/gi;
     let output = '';
@@ -35,7 +35,7 @@ module.exports = (args) => {
                             font = file.split('.')[0].split('=');
                             output += '@font-face {\n';
                             output += '    font-family:'+font[0]+';\n';
-                            output += '    src:url("../../fonts/'+folder+'/'+file+'");\n';
+                            output += '    src:url("../../'+paths[i]+'/'+folder+'/'+file+'");\n';
                             output += '}\n';
                             files.push(file);
                             console.log('Info: added to preload', file);
