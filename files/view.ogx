@@ -4,7 +4,7 @@ OGX.Views.{{NAME}} = function(__config){
 	'use strict'; 
 
     //@Override
-    this.construct = function(__data, __route_data){};
+    this.construct = function(__data){};
     
     //@Override
 	this.enable = function(){};
