@@ -7,10 +7,14 @@ OGX.Views.{{NAME}} = function(__config){
     this.construct = function(__data){};
     
     //@Override
-	this.enable = function(){};
+	this.enable = function(){
+        this.enabled = true;
+    };
 	
     //@Override
-	this.disable = function(){};    
+	this.disable = function(){
+        this.enabled = false;
+    };    
 	
     //@Override
 	this.ux = function(__bool){
