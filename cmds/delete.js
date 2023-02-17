@@ -69,7 +69,7 @@ module.exports = (args) => {
         }
         let config = loadConfig();
         if(config){
-            let vapp = __name.toLowerCase()+'.Stages.'+__name;
+            let vapp = __name.toLowerCase()+':Stages.'+__name;
             for(let a in config.vapps){
                 if(a === vapp){
                     delete config.vapps[a];
