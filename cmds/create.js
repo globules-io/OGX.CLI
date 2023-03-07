@@ -95,26 +95,29 @@ module.exports = (args) => {
             fs.writeFileSync('www/css/stages/stage.'+__stage_name+'.css', '/* CSS */');
             links.push('<script type="application/javascript" src="js/stages/stage.'+__stage_name+'.js"></script>');
             links.push('<link rel="stylesheet" href="css/stages/stage.'+__stage_name+'.css">');
-            config = loadConfig();
+            let config = loadConfig();
             if(config){
                 if(!config.hasOwnProperty('vapps')){
                     config.vapps = {};
                 }
-                let t = '';
+                let t = null;
                 if(__template_name){
                     saveConfig(config);
                     createTemplate(__template_name);
                     t = __template_name;   
                     config = loadConfig();
-                }
-                config.vapps[args[1].toLowerCase()+':Stages.'+args[1]] = {
-                    template:t,
-                    use:false,
-                    home:'',
-                    placeholder:'',
+                }                
+                let conf = {                    
+                    use: false,
+                    home: '',
+                    placeholder: 'default',
                     scope:['public'],
                     theater:false
                 }
+                if(t){
+                    conf.template = t;
+                }
+                config.vapps[args[1].toLowerCase()+':Stages.'+args[1]] = conf;
                 saveConfig(config);
             }else{           
                 console.log('Warning: app.json file not found');      
@@ -149,7 +152,7 @@ module.exports = (args) => {
 
     function makeFile(__type, __name){
         const filename = __type+'.ogx';       
-        let rp =  require('path').resolve(__dirname, '../files/'+filename);
+        let rp = require('path').resolve(__dirname, '../files/'+filename);
         let file = fs.readFileSync(rp, 'utf-8');
         file = file.replace(/{{NAME}}/gi, __name);
         let path, name, dest;
