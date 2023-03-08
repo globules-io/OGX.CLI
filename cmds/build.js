@@ -6,7 +6,7 @@ module.exports = (args) => {
         console.log('Error: Command build requires a target and a platform!');
         return;
     }
-    if(/(ios|android|windows|mac|linux)/gi.test(args[0])){
+    if(/(ios|android|desktop)/gi.test(args[0])){
         let com = false;
         let log;
         switch(args[0]){
@@ -28,7 +28,8 @@ module.exports = (args) => {
             break;
 
             case 'desktop':
-
+            console.log('Info: Building neutralino');
+            com = 'neu build';
             break;
         }
         if(com){
