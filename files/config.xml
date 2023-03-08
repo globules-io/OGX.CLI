@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.domain.yourapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Your App</name>
+    <description>Description</description>
+    <author email="dev@domaain.com" href="https://domain.com">domain.com</author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />        
+    </platform>
+    <platform name="ios">
+        <access origin="http://localhost:8080" />
+        <allow-navigation href="http://localhost:8080/*" />
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />        
+    </platform>
+    <preference name="scheme" value="app" />
+    <preference name="hostname" value="com.domain.yourapp" />
+</widget>
