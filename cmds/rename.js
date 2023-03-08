@@ -70,7 +70,8 @@ module.exports = (args) => {
             return false;
         }
         let file = fs.readFileSync('www/js/views/view.'+__oldname+'.js', 'utf-8');
-        file = file.replaceAll('Views.'+__oldname, 'Views.'+__newname);
+        let reg = new RegExp("(Views\."+__oldname+")(['\=\: ])", 'g');
+        file = file.replace(reg, 'Views.'+__newname+'$2');  
         fs.writeFileSync('www/js/views/view.'+__newname+'.js', file);
         fs.unlinkSync('www/js/views/view.'+__oldname+'.js');
         if(!fs.existsSync('www/css/views/view.'+__oldname+'.css')){
@@ -80,7 +81,8 @@ module.exports = (args) => {
         }
         let config = loadConfig(false);
         if(config){
-            config = config.replaceAll('Views.'+__oldname, 'Views.'+__newname);
+            reg = new RegExp("(Views\."+__oldname+")([\=])", 'g');
+            config = config.replace(reg, 'Views.'+__newname+'$2');
             saveConfig(config, false);
         }
         console.log('Info: View renamed from', __oldname, 'to', __newname);
@@ -93,7 +95,8 @@ module.exports = (args) => {
             return;
         }
         let file = fs.readFileSync('www/js/stages/stage.'+__oldname+'.js', 'utf-8');
-        file = file.replaceAll('Stages.'+__oldname, 'Stages.'+__newname);
+        let reg = new RegExp("(Stages\."+__oldname+")(['\=\: ])", 'g');
+        file = file.replace(reg, 'Stages.'+__newname+'$2');          
         fs.writeFileSync('www/js/stages/stage.'+__newname+'.js', file);
         fs.unlinkSync('www/js/stages/stage.'+__oldname+'.js');
         if(!fs.existsSync('www/css/stages/stage.'+__oldname+'.css')){
@@ -103,7 +106,8 @@ module.exports = (args) => {
         }
         let config = loadConfig(false);
         if(config){
-            config = config.replaceAll('Stages.'+__oldname, 'Stages.'+__newname);
+            reg = new RegExp("(Stages\."+__oldname+")([\=])", 'g');
+            config = config.replace(reg, 'Stages.'+__newname+'$2');
             saveConfig(config, false);
         }
         console.log('Info: Stags renamed from', __oldname, 'to', __newname);      
@@ -116,12 +120,14 @@ module.exports = (args) => {
             return false;
         }
         let file = fs.readFileSync('www/js/controllers/controller.'+__oldname+'.js', 'utf-8');
-        file = file.replaceAll('Controllers.'+__oldname, 'Controllers.'+__newname);
+        let reg = new RegExp("(Controllers\."+__oldname+")(['\=\: ])", 'g');
+        file = file.replace(reg, 'Controllers.'+__newname+'$2');   
         fs.writeFileSync('www/js/controllers/controller.'+__newname+'.js', file);
         fs.unlinkSync('www/js/controllers/controller.'+__oldname+'.js');
         let config = loadConfig(false);
         if(config){
-            config = config.replaceAll('Controllers.'+__oldname, 'Controllers.'+__newname);
+            reg = new RegExp("(Controllers\."+__oldname+")([\=])", 'g');
+            config = config.replace(reg, 'Controllers.'+__newname+'$2');
             saveConfig(config, false);
         }
         console.log('Info: Controller renamed from', __oldname, 'to', __newname); 
@@ -156,10 +162,11 @@ module.exports = (args) => {
         }
         let str = fs.readFileSync(__filepath, 'utf8');
         if(str){ 
-            str = str.replaceAll(__object_type+'s.'+__old_name, __object_type+'s.'+__name);
+            let reg = new RegExp('('+__object_type+'s.'+__old_name+")(['\=\: ])", 'g');
+            str = str.replace(reg, __object_type+'s.'+__name+'$2');
             if(__object_type === 'Template'){
-                const reg = new RegExp('("template" ?: ?)("'+__old_name+'")', 'g');
-                str = str.replace(reg, '$1'+'"'+__name+'"');
+                const reg = new RegExp('("template" ?: ?)("'+__old_name+'")([ };]*)', 'g');
+                str = str.replace(reg, '$1'+'"'+__name+'"$3');
             }                   
             fs.writeFileSync(__filepath, str);
         }
