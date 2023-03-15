@@ -3,7 +3,11 @@
 		"routes":{},
 		"options":{
 			"history":true,
-			"bookmarkable":true            
+			"bookmark":true,
+            "eval": false,
+            "jail": false,
+            "cache": false,
+            "idle": false         
         },
 		"errors":{}
     },
@@ -31,12 +35,12 @@
 	"popups":{
         "width":300,
         "height":400,
-        "anim":"OGX.Popup.ANIM_FADE",
+        "anim":"fade",
         "overlay":true,
         "listen_overlay":false
     },    
     "windows":{
-        "style":"OGX.Window.HEAD_BACK",
+        "style":"back",
         "width":"100%",
         "icons":["img/logo.svg"],
         "fade":false,
@@ -45,7 +49,7 @@
         "show":false
     },
     "overlays":{
-        "anim":"OGX.Overlay.ANIM_FADE"
+        "anim":"fade"
     },
     "scope":["public"]    
 }

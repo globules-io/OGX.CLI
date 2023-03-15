@@ -4,20 +4,16 @@ OGX.Views.{{NAME}} = function(__config){
 	'use strict'; 
 
     //@Override
-    this.construct = function(__data){};
+    this.construct = (__data) => {};
     
     //@Override
-	this.enable = function(){
-        this.enabled = true;
-    };
+	this.onFocus = () => {};
 	
     //@Override
-	this.disable = function(){
-        this.enabled = false;
-    };    
+	this.onBlur = () => {};   
 	
     //@Override
-	this.ux = function(__bool){
+	this.ux = (__bool) => {
         if(__bool){
           
         }else{
@@ -26,6 +22,6 @@ OGX.Views.{{NAME}} = function(__config){
     }; 
     
     //@Override
-    this.destroy = function(){};
+    this.destroy = () => {};
 
 };

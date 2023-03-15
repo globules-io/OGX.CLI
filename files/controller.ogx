@@ -4,24 +4,23 @@ OGX.Controllers.{{NAME}} = function(){
     'use strict';
 
     //@Override
-    this.construct = function(){};
+    this.construct = () => {};
 	
     //@Override
-	this.enable = function(){
-        this.enabled = true;
-    };
+	this.onFocus = () => {};
 	
     //@Override
-	this.disable = function(){
-        this.enabled = false;
-    };  
+	this.onBlur = () => {};
     
     //@Override
-	this.ux = function(__bool){
+	this.ux = (__bool) => {
         if(__bool){
             
         }else{
            
         }
-	};     
+	}; 
+
+    //@Override
+    this.destroy = () => {};
 };
