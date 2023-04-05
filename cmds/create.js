@@ -111,8 +111,8 @@ module.exports = (args) => {
                     use: false,
                     home: '',
                     placeholder: 'default',
-                    scope:['public'],
-                    theater:false
+                    scope: 'public',
+                    theater: false
                 }
                 if(t){
                     conf.template = t;
