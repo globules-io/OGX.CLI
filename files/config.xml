@@ -19,6 +19,6 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />        
     </platform>
-    <preference name="scheme" value="app" />
+    <preference name="scheme" value="https" />
     <preference name="hostname" value="com.domain.yourapp" />
 </widget>
