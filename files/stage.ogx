@@ -4,16 +4,16 @@ OGX.Stages.{{NAME}} = function(__obj){
 	'use strict';
 
     //@Override
-	this.construct = () => {};
+	this.construct = function(){};
 	
     //@Override
-	this.onFocus = () => {};
+	this.onFocus = function(){};
 	
     //@Override
-	this.onBlur = () => {};
+	this.onBlur = function(){};
 	
     //@Override
-	this.ux = (__bool) => {
+	this.ux = function(__bool){
         if(__bool){
             
         }else{
@@ -22,5 +22,5 @@ OGX.Stages.{{NAME}} = function(__obj){
     };
 
     //@Override
-    this.destroy = () => {};
+    this.destroy = function(){};
 };
