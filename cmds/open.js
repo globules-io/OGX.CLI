@@ -37,7 +37,7 @@ module.exports = (args) => {
     function lookupViewJS(__name){
         fs.readdirSync('www/js/views').forEach(file => {
             if(file.toLowerCase() === 'view.'+__name.toLowerCase()+'.js'){
-                console.log('Info: Found css view', file);
+                console.log('Info: Found js view', file);
                 openFile('www/js/views', file);
             }
         });
@@ -47,7 +47,7 @@ module.exports = (args) => {
     function lookupViewCSS(__name){
         fs.readdirSync('www/css/views').forEach(file => {
             if(file.toLowerCase() === 'view.'+__name.toLowerCase()+'.css'){
-                console.log('Info: Found js view', file);
+                console.log('Info: Found css view', file);
                 openFile('www/css/views', file);
             }
         });
