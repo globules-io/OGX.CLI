@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 module.exports = (args) => {    
-    if(!args || args.length < 1){
+    if(!args || args.length < 2){
         console.log('Error: Missing arguments! Expected [name] or [type] [name]');
         return;
     }
@@ -10,8 +10,8 @@ module.exports = (args) => {
 
     let name;
     let type = null;
-    let lookup_all = args.length === 1;
-    lookup_all ? name = args[0] : [name, type] = [args[0], args[1]];
+    let lookup_all = args.length === 2;
+    lookup_all ? name = args[0] : [name, type] = [args[1], args[0]];
 
     if(lookup_all || type === 'js'){
         lookupViewJS(name);
