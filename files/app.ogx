@@ -51,5 +51,12 @@
     "overlays":{
         "anim":"fade"
     },
+    "splash":{
+        "enabled": false,
+        "color": null,
+        "image" : null,
+        "auto_hide": false,
+        "hide_timeout": 0
+    },
     "scope":"public"  
 }
