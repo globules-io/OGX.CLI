@@ -13,5 +13,22 @@ module.exports = (args) => {
         conf = CryptoJS.AES.decrypt(conf, key, {mode:CryptoJS.mode.CBC, padding:CryptoJS.pad.Pkcs7}).toString(CryptoJS.enc.Utf8);;
         fs.writeFileSync('www/app.json', conf);   
         console.log('Info: app.json has been decrypted'); 
+
+        //list pak files and encrypt them
+        let dec = 0;
+        const folders = ['html', 'json', 'oml'];
+        folders.forEach((__folder) => {
+            fs.readdirSync('www/'+__folder).forEach(__file => {    
+                if(/\.pak$/.test(__file)){              
+                    let text = fs.readFileSync('www/'+__folder+'/'+__file, 'utf-8');
+                    text = CryptoJS.AES.encrypt(text, key, {mode:CryptoJS.mode.CBC, padding:CryptoJS.pad.Pkcs7}).toString();
+                    fs.writeFileSync('www/'+__folder+'/'+__file, text);
+                    dec++;
+                }
+            });
+        });
+        if(dec){
+            console.log('Info: '+dec+' pak files decrypted'); 
+        }
     }
 };
