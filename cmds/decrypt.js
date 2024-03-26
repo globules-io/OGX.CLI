@@ -21,7 +21,7 @@ module.exports = (args) => {
             fs.readdirSync('www/'+__folder).forEach(__file => {    
                 if(/\.pak$/.test(__file)){              
                     let text = fs.readFileSync('www/'+__folder+'/'+__file, 'utf-8');
-                    text = CryptoJS.AES.encrypt(text, key, {mode:CryptoJS.mode.CBC, padding:CryptoJS.pad.Pkcs7}).toString();
+                    text = CryptoJS.AES.decrypt(text, key, {mode:CryptoJS.mode.CBC, padding:CryptoJS.pad.Pkcs7}).toString(CryptoJS.enc.Utf8);;
                     fs.writeFileSync('www/'+__folder+'/'+__file, text);
                     dec++;
                 }
