@@ -44,8 +44,8 @@ module.exports = (args) => {
     }    
 
     if(index){       
-        index = index.replace('<link rel="stylesheet" href="css/min/min.css">\n', '');
-        index = index.replace('<script type="application/javascript" src="js/min/min.js"></script>\n', '');
+        index = index.replace(/<script (.*)js\/min\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');  
+        index = index.replace(/<link (.*)css\/min\/(.+)>(\r\n|\r|\n)*/gim, '');  
         fs.writeFileSync('www/'+options.index, index);
     }
 

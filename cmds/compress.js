@@ -32,11 +32,26 @@ module.exports = (args) => {
     let options = args[args.length-1];
     let index = fs.readFileSync('www/'+options.index, 'utf8');
 
+    index = index.replace(/<script (.*)js\/stages\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');
+    index = index.replace(/<link (.*)css\/stages\/(.+)>(\r\n|\r|\n)*/gim, ''); 
+    index = index.replace(/<script (.*)js\/views\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');
+    index = index.replace(/<link (.*)css\/views\/(.+)>(\r\n|\r|\n)*/gim, '');
+    index = index.replace(/<script (.*)js\/controllers\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');  
+    index = index.replace(/<link (.*)css\/bin\/(.+)>(\r\n|\r|\n)*/gim, ''); 
+    index = index.replace(/<script (.*)js\/bin\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');
+
     const folders = ['js/bin', 'js/views', 'js/controllers', 'js/stages', 'css/bin', 'css/views', 'css/stages']; 
     let to_compress = [];
     let to_merge = [];
-    let files;
+    let files, reg;
     for(let i = 0; i < folders.length; i++){
+        if(folders[i].indexOf('js') !== -1){
+            reg = new RegExp('<script (.*)'+folders[i]+'\/(.+)<\/script>\n', 'gim');            
+        }else{
+            reg = new RegExp('<link (.*)'+folders[i]+'\/(.+)>\n', 'gim');   
+        }
+        index = index.replace(reg, '');
+
         if(!fs.existsSync('ogx/'+folders[i])){
             fs.mkdirSync('ogx/'+folders[i]);
         } 
@@ -52,7 +67,7 @@ module.exports = (args) => {
                         index = index.replace('<script type="application/javascript" src="'+folders[i]+'/'+file+'"></script>\n', '');     
                     }else{
                         if(file.includes('.css')){
-                            index = index.replace('<link rel="stylesheet" href="'+folders[i]+'/'+file+'">\n', '');    
+                            index = index.replace('<link rel="stylesheet" href="'+folders[i]+'/'+file+'" type="text/css">\n', '');    
                         } 
                     }               
                 }
@@ -108,7 +123,7 @@ module.exports = (args) => {
                         str += css;                         
                         if(index){
                             //remove link from index.html      
-                            index = index.replace('<link rel="stylesheet" href="'+csss[i]+'/'+file+'">\n', '');
+                            index = index.replace('<link rel="stylesheet" href="'+csss[i]+'/'+file+'" type="text/css">\n', '');
                         }
                     }else{
                         console.log('Error: Could not read file', 'ogx/'+csss[i]+'/'+file);
