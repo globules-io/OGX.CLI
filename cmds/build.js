@@ -2,11 +2,12 @@
 
 module.exports = (args) => {
     const exec = require('child_process').execSync;
-    if(args.length < 2){
+    //depends if we do a platform build or a release/reset build
+    if(/(ios|android|desktop)/gi.test(args[0]) && args.length < 2){    
         console.log('Error: Command build requires a target and a platform!');
         return;
     }
-    if(/(ios|android|desktop)/gi.test(args[0])){
+    if(/(ios|android|desktop|release|restore)/gi.test(args[0])){
         let com = false;
         let log;
         switch(args[0]){
@@ -30,6 +31,24 @@ module.exports = (args) => {
             case 'desktop':
             console.log('Info: Building neutralino');
             com = 'neu build';
+            break;
+
+            case 'release':
+            if(args.length === 3){
+                args.unshift();
+                require('./release.js')(args);
+            }else{
+                require('./release.js')([]);
+            }
+            break;
+
+            case 'restore':
+            if(args.length === 3){
+                args.unshift();
+                require('./reset.js')(args);
+            }else{
+                require('./reset.js')([]);
+            }
             break;
         }
         if(com){
