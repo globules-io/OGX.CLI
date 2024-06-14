@@ -36,19 +36,15 @@ module.exports = (args) => {
             case 'release':
             if(args.length === 3){
                 args.unshift();
-                require('./release.js')(args);
-            }else{
-                require('./release.js')([]);
             }
+            require('./release.js')(args);
             break;
 
             case 'restore':
             if(args.length === 3){
-                args.unshift();
-                require('./reset.js')(args);
-            }else{
-                require('./reset.js')([]);
+                args.unshift();                
             }
+            require('./reset.js')(args);
             break;
         }
         if(com){

@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 module.exports = (args) => {     
     const fs = require('fs');
-    let options = args[args.length-1];
+    let options = {};
     let env;
+    if(args.length){
+        options = args[args.length-1];
+    }
     if(options.hasOwnProperty('env')){
         env = options.env;
     }else{
