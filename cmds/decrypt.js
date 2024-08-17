@@ -10,7 +10,16 @@ module.exports = (args) => {
     let conf = fs.readFileSync('www/app.json', 'utf-8');
     if(conf){
         const CryptoJS = require('crypto-js');
-        conf = CryptoJS.AES.decrypt(conf, key, {mode:CryptoJS.mode.CBC, padding:CryptoJS.pad.Pkcs7}).toString(CryptoJS.enc.Utf8);;
+        conf = CryptoJS.AES.decrypt(conf, key, {mode:CryptoJS.mode.CBC, padding:CryptoJS.pad.Pkcs7}).toString(CryptoJS.enc.Utf8);
+        //remove ejs
+        let json = JSON.parse(conf);
+        if(json.preload.hasOwnProperty('/ejs')){
+            delete json.preload['/ejs'];
+            conf = JSON.stringify(json);
+        }     
+        if(fs.existsSync('www/js/min/min.ejs')){
+            fs.unlinkSync('www/js/min/min.ejs');
+        }
         fs.writeFileSync('www/app.json', conf);   
         console.log('Info: app.json has been decrypted'); 
 
@@ -27,8 +36,10 @@ module.exports = (args) => {
                 }
             });
         });
+
         if(dec){
             console.log('Info: '+dec+' pak files decrypted'); 
         }
+        
     }
 };

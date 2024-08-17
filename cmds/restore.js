@@ -52,8 +52,12 @@ module.exports = (args) => {
     console.log('Info: Cleaning up');    
     if(fs.existsSync('www/js/min/min.js')){
         fs.unlinkSync('www/js/min/min.js');
-        fs.rmSync('www/js/min', {recursive:true});
     }
+    if(fs.existsSync('www/js/min/bin.js')){
+        fs.unlinkSync('www/js/min/bin.js');
+    }
+    fs.rmSync('www/js/min', {recursive:true});
+    
     if(fs.existsSync('www/css/min/min.css')){
         fs.unlinkSync('www/css/min/min.css');
         fs.rmSync('www/css/min', {recursive:true});

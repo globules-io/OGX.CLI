@@ -6,6 +6,12 @@ module.exports = (args) => {
     const csso = require('csso');
     let files_to_delete = [];
     let folders_to_delete = [];
+
+    //ejs
+    let ejs = false;
+    if(args.length > 1 && args[0] === 'ejs'){
+        ejs = true;
+    }
     
     if(fs.existsSync('ogx/js')){
         console.log('Error: Already minified!');
@@ -40,7 +46,7 @@ module.exports = (args) => {
     index = index.replace(/<link (.*)css\/bin\/(.+)>(\r\n|\r|\n)*/gim, ''); 
     index = index.replace(/<script (.*)js\/bin\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');
 
-    const folders = ['js/bin', 'js/views', 'js/controllers', 'js/stages', 'css/bin', 'css/views', 'css/stages']; 
+    let folders = ['js/bin', 'js/views', 'js/controllers', 'js/stages', 'css/bin', 'css/views', 'css/stages'];       
     let to_compress = [];
     let to_merge = [];
     let files, reg;
@@ -72,9 +78,14 @@ module.exports = (args) => {
                     }               
                 }
             }); 
-            if(files && folders[i].substr(0, 2) === 'js'){
-                to_compress.push('uglifyjs-folder ogx/'+folders[i]+' -o ogx/js/min/'+folders[i].split('/').pop()+'.min.js');
-                to_merge.push('ogx/js/min/'+folders[i].split('/').pop()+'.min.js');
+            if(files && folders[i].slice(0, 2) === 'js'){                
+                if(ejs && folders[i] === 'js/bin'){
+                    //skip bin in ejs
+                    to_compress.push('uglifyjs-folder ogx/'+folders[i]+' -o www/js/min/bin.js');
+                }else{                   
+                    to_merge.push('ogx/js/min/'+folders[i].split('/').pop()+'.min.js');
+                    to_compress.push('uglifyjs-folder ogx/'+folders[i]+' -o ogx/js/min/'+folders[i].split('/').pop()+'.min.js');
+                }
             }  
         }
         if(fs.existsSync('www/'+folders[i])){
@@ -97,11 +108,11 @@ module.exports = (args) => {
             }
         }
     }
-    if(str.length){
+    if(str.length){        
         fs.writeFileSync('www/js/min/min.js', str);
     }else{
         console.log('Warning: No js file to compress');    
-    }
+    }   
 
     console.log('Info: Compressing css files');    
     const csss = ['css/bin', 'css/views', 'css/stages'];
@@ -162,8 +173,12 @@ module.exports = (args) => {
     }
    
     if(index){
-        index = index.replace('</head>', '<link rel="stylesheet" href="css/min/min.css">\n</head>');
-        index = index.replace('</head>', '<script type="application/javascript" src="js/min/min.js"></script>\n</head>');       
+        index = index.replace('</head>', '<link rel="stylesheet" href="css/min/min.css">\n</head>');          
+        if(ejs){
+            index = index.replace('</head>', '<script type="application/javascript" src="js/min/bin.js"></script>\n</head>');   
+        }else{
+            index = index.replace('</head>', '<script type="application/javascript" src="js/min/min.js"></script>\n</head>'); 
+        }   
         fs.writeFileSync('www/'+options.index, index);
     }
 

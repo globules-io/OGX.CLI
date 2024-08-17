@@ -34,16 +34,25 @@ module.exports = (args) => {
             break;
 
             case 'release':
+            args.shift();
+            /*
+            //BUILD RELEASE [ 'release', 'TOTO', { index: 'index.html', env: 'dev' } ]
             if(args.length === 3){
-                args.unshift();
+                args.shift();
             }
+            */
+            console.log('BUILD RELEASE', args);
             require('./release.js')(args);
             break;
 
             case 'restore':
+            args.shift();
+            /*
             if(args.length === 3){
-                args.unshift();                
+                args.shift();                
             }
+            */
+            console.log('BUILD RESTORE', args);
             require('./reset.js')(args);
             break;
         }
