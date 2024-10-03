@@ -80,6 +80,11 @@ const menus = {
         description : list all files of a type and unlinks them from the index file
         example     : ogx link all
 
+    css
+        syntax      : ogx css [name]
+        description : cycles through a view template and prefills css selectors in the css file of a view
+        example     : ogx css MyView
+
     prepare
         syntax      : ogx prepare [optional type or subcommand]
         description : links all files and set the preload

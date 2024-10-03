@@ -2,7 +2,7 @@
 
 let args = process.argv.slice(2);
 let cmd = args.shift();
-if(/(init|update|log|set|unset|create|delete|rename|version|help|images|sounds|omls|oses|jsons|templates|fonts|link|unlink|compress|restore|encrypt|decrypt|prepare|build|deploy|dev|prod|pack|unpack|purge|builder|open)/gi.test(cmd)){
+if(/(init|update|log|set|unset|create|delete|rename|version|help|images|sounds|omls|oses|jsons|templates|fonts|link|unlink|compress|restore|encrypt|decrypt|prepare|build|deploy|dev|prod|pack|unpack|purge|builder|open|css)/gi.test(cmd)){
     const fs = require('fs');
     let options = null;
     if(fs.existsSync('cli.json')){
