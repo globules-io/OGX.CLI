@@ -13,6 +13,12 @@ OGX.Stages.{{NAME}} = function(__obj){
 	this.onBlur = function(){};
 
     //@Override
+	this.onEnable = function(){};
+	
+    //@Override
+	this.onDisable = function(){};
+
+    //@Override
 	this.onResize = function(){};
 	
     //@Override

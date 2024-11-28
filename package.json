@@ -1,39 +1,39 @@
 {
-  "name": "@globules-io/ogx.cli",
-  "version": "1.17.0",
-  "description": "OGX CLI for OGX.JS",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/globules-io/OGX.CLI"
-  },
-  "bin": {
-    "ogx": "./bin/ogx.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "npm i -g uglifyjs-folder@^3.0.0"
-  },
-  "keywords": [
-    "CLI",
-    "javascript",
-    "framework"
-  ],
-  "author": "globules.io",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/globules-io/OGX.CLI/issues"
-  },
-  "homepage": "https://github.com/globules-io/OGX.CLI#readme",
-  "dependencies": {
-    "chalk": "^4.1.0",
-    "cheerio": "^1.0.0",
-    "child_process": "^1.0.2",
-    "compare-versions": "^3.6.0",
-    "crypto-js": "^4.0.0",
-    "csso": "^4.0.3",
-    "fs": "0.0.1-security",
-    "fs-extra": "^9.0.1",
-    "node-cmd": "^4.0.0",
-    "path": "^0.12.7"
-  }
+     "name": "@globules-io/ogx.cli",
+     "version": "1.17.1",
+     "description": "OGX CLI for OGX.JS",
+     "repository": {
+          "type": "git",
+          "url": "git+https://github.com/globules-io/OGX.CLI"
+     },
+     "bin": {
+          "ogx": "./bin/ogx.js"
+     },
+     "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1",
+          "preinstall": "npm i -g uglifyjs-folder@^3.0.0"
+     },
+     "keywords": [
+          "CLI",
+          "javascript",
+          "framework"
+     ],
+     "author": "globules.io",
+     "license": "Apache-2.0",
+     "bugs": {
+          "url": "https://github.com/globules-io/OGX.CLI/issues"
+     },
+     "homepage": "https://github.com/globules-io/OGX.CLI#readme",
+     "dependencies": {
+          "chalk": "^4.1.0",
+          "cheerio": "^1.0.0",
+          "child_process": "^1.0.2",
+          "compare-versions": "^3.6.0",
+          "crypto-js": "^4.0.0",
+          "csso": "^4.0.3",
+          "fs": "0.0.1-security",
+          "fs-extra": "^9.0.1",
+          "node-cmd": "^4.0.0",
+          "path": "^0.12.7"
+     }
 }
