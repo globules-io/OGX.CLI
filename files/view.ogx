@@ -13,12 +13,6 @@ OGX.Views.{{NAME}} = function(__config){
 	this.onBlur = function(){};
 
     //@Override
-	this.onEnable = function(){};
-	
-    //@Override
-	this.onDisable = function(){};
-
-    //@Override
 	this.onResize = function(){};
 	
     //@Override
