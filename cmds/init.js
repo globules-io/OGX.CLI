@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 
-module.exports = (args) => {
-    const fs = require('fs-extra');
+module.exports = (args) => {    
+    const fs = require('fs-extra');    
+    const exec = require('child_process').execSync;
+    const path = require('path');
+    const install_path = path.normalize('./node_modules/@globules-io/ogx.js/install.js');
+    const com = 'node '+install_path;
+    exec(com, function(error, stdout, stderr) {
+        console.dir(stdout);
+    });
     if(!fs.existsSync('www/css/stages')){
         fs.mkdirSync('www/css/stages', {recursive:true});            
     }
@@ -43,5 +50,5 @@ module.exports = (args) => {
     }
     if(!fs.existsSync('www/html')){
         fs.mkdirSync('www/html', {recursive:true});            
-    }
+    }    
 };
