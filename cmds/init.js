@@ -6,6 +6,12 @@ module.exports = (args) => {
     const path = require('path');
     const install_path = path.normalize('./node_modules/@globules-io/ogx.js/install.js');
     const com = 'node '+install_path;
+    if(fs.existsSync('www/js/lib/globules/ogx.dev.min.js')){
+        fs.unlinkSync('www/js/lib/globules/ogx.dev.min.js');            
+    }
+    if(fs.existsSync('www/js/lib/globules/ogx.min.js')){
+        fs.unlinkSync('www/js/lib/globules/ogx.min.js');            
+    }
     exec(com, function(error, stdout, stderr) {
         console.dir(stdout);
     });
