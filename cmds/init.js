@@ -1,20 +1,7 @@
 #!/usr/bin/env node
 
 module.exports = (args) => {    
-    const fs = require('fs-extra');    
-    const exec = require('child_process').execSync;
-    const path = require('path');
-    const install_path = path.normalize('./node_modules/@globules-io/ogx.js/install.js');
-    const com = 'node '+install_path;
-    if(fs.existsSync('www/js/lib/globules/ogx.dev.min.js')){
-        fs.unlinkSync('www/js/lib/globules/ogx.dev.min.js');            
-    }
-    if(fs.existsSync('www/js/lib/globules/ogx.min.js')){
-        fs.unlinkSync('www/js/lib/globules/ogx.min.js');            
-    }
-    exec(com, function(error, stdout, stderr) {
-        console.dir(stdout);
-    });
+    const fs = require('fs-extra');   
     if(!fs.existsSync('www/css/stages')){
         fs.mkdirSync('www/css/stages', {recursive:true});            
     }

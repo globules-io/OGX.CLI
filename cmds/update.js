@@ -53,6 +53,16 @@ module.exports = (args) => {
             console.log('Info: installing @globules-io/ogx.js@'+latest);
             cmd.runSync('npm install @globules-io/ogx.js@'+latest);
         }
+        if(args.includes('--force') && !fs.existsSync('www/js/lib/globules/ogx.dev.min.js')){
+            //patch : run postinstall again if it has failed
+            const exec = require('child_process').execSync;
+            const path = require('path');
+            const install_path = path.normalize('./node_modules/@globules-io/ogx.js/install.js');
+            const com = 'node '+install_path;            
+            exec(com, function(error, stdout, stderr) {
+                console.dir(stdout);
+            });
+        }
     }else{
         console.log('Info: Latest version already installed.');
     }
