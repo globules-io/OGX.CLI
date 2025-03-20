@@ -4,6 +4,7 @@ module.exports = (args) => {
     
     const cv = require('compare-versions');
     const cmd = require('node-cmd');
+    const fs = require('fs');
     const cmd_dir = process.cwd();    
     let pkg = require(cmd_dir+'/package.json');
     var version = false;
