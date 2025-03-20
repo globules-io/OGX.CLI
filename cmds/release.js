@@ -14,10 +14,10 @@ module.exports = (args) => {
     require('./compress.js')(cargs);
 
     //encrypt
-    if(args.length === 3){    
+    if(args.length === 2){    
         //missing flag
         const arg = args.slice();    
-        arg.pop();
+        arg.pop(); 
         require('./encrypt.js')(arg.concat([args[args.length-1]]));
     }
     console.log('Info: release built!');  

@@ -3,7 +3,7 @@
 module.exports = (args) => {
     console.log('Info: restore build files');  
     //decrypt
-    if(args.length === 3){   
+    if(args.length === 2){   
         require('./decrypt.js')([args[0]].concat([args[args.length-1]]));
     }
     require('./restore.js')([args[args.length-1]]);
