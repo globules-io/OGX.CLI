@@ -107,9 +107,7 @@ module.exports = (args) => {
                     t = __template_name;   
                     config = loadConfig();
                 }                
-                let conf = {                    
-                    use: false,
-                    home: '',
+                let conf = {   
                     placeholder: 'default',
                     scope: 'public',
                     theater: false
