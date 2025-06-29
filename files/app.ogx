@@ -1,36 +1,38 @@
 {
-    "routing": {
-        "routes": {},
-        "index": "",
-        "options": {
-            "history": true,
-            "bookmark": false,
-            "cache": false,
-            "jail": false,
-            "eval": false
-        },
-        "cache": [],
-        "errors": {}
-    },
-    "vapps": {
-        
-    },
-    "preload": {
-        
-    },
-    "views": {
-        "delay": 30
-    },
-    "overlays": {
-        "delay": 30
-    },
-    "popups": {
-        "width": 300,
-        "height": 400,
-        "anim": "scale"
-    },
-    "windows": {
-        "head": "back",
-        "width": "100%"
-    }
+     "routing": {
+          "routes": {},
+          "index": "",
+          "options": {
+               "history": true,
+               "bookmark": false,
+               "cache": false,
+               "jail": false,
+               "eval": false
+          },
+          "cache": [],
+          "errors": {}
+     },
+     "vapps": {},
+     "preload": {},
+     "popups": {
+          "width": 300,
+          "height": 400,
+          "anim": "fade"
+     },
+     "windows": {
+          "head": "back",
+          "width": "100%"
+     },
+     "views": {},
+     "overlays": {},
+     "splash": {
+          "enabled": false,
+          "color": null,
+          "image": null,
+          "auto_hide": false,
+          "hide_timeout": 0
+     },
+     "rendertime": false,
+     "scope": "public",
+     "jwt": false
 }
