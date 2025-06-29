@@ -1,6 +1,6 @@
 {
      "name": "@globules-io/ogx.cli",
-     "version": "1.18.2",
+     "version": "1.18.4",
      "description": "OGX CLI for OGX.JS",
      "repository": {
           "type": "git",
