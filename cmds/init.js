@@ -44,4 +44,9 @@ module.exports = (args) => {
     if(!fs.existsSync('www/html')){
         fs.mkdirSync('www/html', {recursive:true});            
     }    
+    if(!fs.existsSync('www/app.json')){
+        let app = require('path').resolve(__dirname, '../files/app.ogx');
+        let file = fs.readFileSync(app, 'utf-8');
+        fs.writeFileSync('www/app.json', file);  
+    }
 };
