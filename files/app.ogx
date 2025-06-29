@@ -1,62 +1,36 @@
 {
-    "routing":{
-		"routes":{},
-		"options":{
-			"history":true,
-			"bookmark":true,
-            "eval": false,
-            "jail": false,
+    "routing": {
+        "routes": {},
+        "index": "",
+        "options": {
+            "history": true,
+            "bookmark": false,
             "cache": false,
-            "idle": false         
+            "jail": false,
+            "eval": false
         },
-		"errors":{}
+        "cache": [],
+        "errors": {}
     },
-    "vapps":{
+    "vapps": {
         
     },
-    "templates":{
-       
+    "preload": {
+        
     },
-	"preload":{
-        "images":{
-            "path":"img/",
-            "files":[]
-        },
-        "sounds":{
-            "path":"snd/",
-            "files":[]
-        },
-        "fonts":[],
-        "json":{
-            "path":"json/",
-            "files":[]
-        }
+    "views": {
+        "delay": 30
     },
-	"popups":{
-        "width":300,
-        "height":400,
-        "anim":"fade",
-        "overlay":true,
-        "listen_overlay":false
-    },    
-    "windows":{
-        "style":"back",
-        "width":"100%",
-        "icons":["img/logo.svg"],
-        "fade":false,
-        "scroll":false,
-        "blured":true,
-        "show":false
+    "overlays": {
+        "delay": 30
     },
-    "overlays":{
-        "anim":"fade"
+    "popups": {
+        "width": 300,
+        "height": 400,
+        "anim": "scale"
     },
-    "splash":{
-        "enabled": false,
-        "color": null,
-        "image" : null,
-        "auto_hide": false,
-        "hide_timeout": 0
-    },
-    "scope":"public"  
+    "windows": {
+        "head": "back",
+        "width": "100%"
+    }
 }
