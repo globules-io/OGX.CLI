@@ -52,10 +52,13 @@ module.exports = (args) => {
         if(options.hasOwnProperty('prepare_skip')){
             skip = options.prepare_skip;
         }
-    }  
+    }     
+
     for(let i = 0; i < calls.length; i++){
         if(!skip.includes(calls[i])){
             require('./'+calls[i]+'.js')(args);
+        }else{
+            console.log('Info: prepare skip', calls[i]);
         }
     }    
     require('./link.js')(['all'].concat(args));
