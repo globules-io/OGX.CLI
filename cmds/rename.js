@@ -165,7 +165,7 @@ module.exports = (args) => {
             let reg = new RegExp('('+__object_type+'s.'+__old_name+")(['\=\: ])", 'g');
             str = str.replace(reg, __object_type+'s.'+__name+'$2');
             if(__object_type === 'Template'){
-                const reg = new RegExp('(("|\')?template("|\')? ?: ?)(("|\')?'+__old_name+'("|\')?)([ };]*)', 'g');
+                const reg = new RegExp('((?:"|\')?template(?:"|\')? ?: ?)((?:"|\')?'+__old_name+'(?:"|\')?)([ };]*)', 'g');
                 str = str.replace(reg, '$1'+'"'+__name+'"$3');
             }                   
             fs.writeFileSync(__filepath, str);
