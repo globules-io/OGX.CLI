@@ -22,10 +22,11 @@ module.exports = (args) => {
         if(fs.existsSync('www/themes')){
             fs.readdirSync('www/themes').forEach(folder => {  
                 if(fs.existsSync('www/themes/'+folder+'/base/fonts')){
-                    paths.push('themes/'+folder+'/base/fonts');
+                    paths.push('/themes/'+folder+'/base/fonts');
                 }
             });
         }
+        let p;
         for(let i = 0; i < paths.length; i++){           
             if(fs.existsSync('www/'+paths[i])){       
                 files = [];  
@@ -33,9 +34,10 @@ module.exports = (args) => {
                     fs.readdirSync('www/'+paths[i]+'/'+folder).forEach(file => {
                         if(reg.test(file) && !files.includes(file)){
                             font = file.split('.')[0].split('=');
+                            p = ('../../'+paths[i]+'/'+folder+'/'+file).replace(/\/\//g, '/');
                             output += '@font-face {\n';
                             output += '    font-family:'+font[0]+';\n';
-                            output += '    src:url("../../'+paths[i]+'/'+folder+'/'+file+'");\n';
+                            output += '    src:url("'+p+'");\n';
                             output += '}\n';
                             files.push(file);
                             console.log('Info: added to preload', file);
