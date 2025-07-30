@@ -63,4 +63,5 @@ module.exports = (args) => {
         fs.rmSync('www/css/min', {recursive:true});
     }
     fs.rmSync('ogx', {recursive:true});
+    require('./dev.js')([options]);
 };

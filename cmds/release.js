@@ -2,8 +2,9 @@
 
 module.exports = (args) => {
     console.log('Info: building release!');  
-    require('./prepare.js')([args[args.length-1]]); 
-    require('./pack.js')(['all'].concat([args[args.length-1]]));  
+    let options = args[args.length-1];
+    require('./prepare.js')([options]); 
+    require('./pack.js')(['all'].concat([options]));  
 
     //flag to compress for ejs --js
     let cargs = [];
@@ -18,7 +19,8 @@ module.exports = (args) => {
         //missing flag
         const arg = args.slice();    
         arg.pop(); 
-        require('./encrypt.js')(arg.concat([args[args.length-1]]));
+        require('./encrypt.js')(arg.concat([options]));
     }
+    require('./prod.js')([options]);
     console.log('Info: release built!');  
 }
