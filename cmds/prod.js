@@ -5,7 +5,7 @@ module.exports = (args) => {
     let options = args[args.length-1];  
     if(!options.hasOwnProperty('env') || options.env !== 'prod'){
         options.env = 'prod';
-        fs.writeFileSync('cli.json', JSON.stringify(options));
+        fs.writeFileSync('ogx_cli.json', JSON.stringify(options));
         let index = fs.readFileSync('www/'+options.index, 'utf-8');
         if(index){
             index = index.replace('<script type="application/javascript" src="js/lib/globules/ogx.dev.min.js"></script>', '<script type="application/javascript" src="js/lib/globules/ogx.min.js"></script>');

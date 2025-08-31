@@ -9,6 +9,6 @@ module.exports = (args) => {
     let options = args[args.length-1];
     if(args[0] !== 'index'){        
         delete options[args[0]];              
-        fs.writeFileSync('cli.json', JSON.stringify(options));
+        fs.writeFileSync('ogx_cli.json', JSON.stringify(options));
     }
 };

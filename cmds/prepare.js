@@ -37,7 +37,7 @@ module.exports = (args) => {
         if(idx !== -1){
             skip = skip.splice(0, idx);
             options.prepare_skip = skip;
-            fs.writeFileSync('cli.json', JSON.stringify(options));       
+            fs.writeFileSync('ogx_cli.json', JSON.stringify(options));       
         }
         //ogx prepare skip --reset
         idx = skip.indexOf('--reset');
@@ -46,7 +46,7 @@ module.exports = (args) => {
             if(options.hasOwnProperty('prepare_skip')){
                 delete options.prepare_skip;
             }
-            fs.writeFileSync('cli.json', JSON.stringify(options));       
+            fs.writeFileSync('ogx_cli.json', JSON.stringify(options));       
         }
     }else{
         if(options.hasOwnProperty('prepare_skip')){

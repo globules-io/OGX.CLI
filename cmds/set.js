@@ -8,5 +8,5 @@ module.exports = (args) => {
     const fs = require('fs');
     let options = args[args.length-1];
     options[args[0]] = args[1];
-    fs.writeFileSync('cli.json', JSON.stringify(options));
+    fs.writeFileSync('ogx_cli.json', JSON.stringify(options));
 };
