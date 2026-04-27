@@ -4,7 +4,7 @@ module.exports = (args) => {
     const fs = require('fs');
     const path = 'www/snd';
     let files = [];
-    const reg = /(\.mp3|\.wav|\.ogg)$/gi;
+    const reg = /(\.mp3|\.wav|\.ogg|\.webm)$/gi;
     let config;
     if(fs.existsSync(path)){
         config = fs.readFileSync('www/app.json', 'utf-8');
