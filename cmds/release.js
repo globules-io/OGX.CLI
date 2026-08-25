@@ -8,11 +8,10 @@ module.exports = (args) => {
 
     //flag to compress for ejs --js
     let cargs = [];
-    if(args.length === 3){
+    if(args.includes('--js')){
         cargs.push('ejs');
     }
     cargs.push(args[args.length-1]);
-
     require('./compress.js')(cargs);
 
     //encrypt

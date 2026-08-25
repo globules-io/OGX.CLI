@@ -18,162 +18,171 @@ module.exports = (args) => {
           return;
      }
 
-     let folders = ['ogx', 'ogx/backup', 'ogx/backup/js', 'ogx/backup/css', 'www/js/min', 'www/css/min'];
+     let folders = ['ogx', 'ogx/backup', 'ogx/backup/js', 'ogx/backup/css', 'ogx/backup/html', 'ogx/backup/json', 'ogx/backup/oml', 'www/js/min', 'www/css/min'];
      folders.forEach(__folder => {
           if(!fs.existsSync(__folder)){
                fs.mkdirSync(__folder);
           }
      });
 
-    console.log('Info: Backing up files');
-    
-    //back up files and remove link
-    let options = args[args.length-1];
-    let index = fs.readFileSync('www/'+options.index, 'utf8');
+     console.log('Info: Backing up files');        
 
-    index = index.replace(/<script (.*)js\/stages\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');
-    index = index.replace(/<link (.*)css\/stages\/(.+)>(\r\n|\r|\n)*/gim, ''); 
-    index = index.replace(/<script (.*)js\/views\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');
-    index = index.replace(/<link (.*)css\/views\/(.+)>(\r\n|\r|\n)*/gim, '');
-    index = index.replace(/<script (.*)js\/controllers\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');  
-    index = index.replace(/<link (.*)css\/bin\/(.+)>(\r\n|\r|\n)*/gim, ''); 
-    index = index.replace(/<script (.*)js\/bin\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');
+     //backup oml, json, html, app.json
+     fs.copyFileSync('www/app.json', 'ogx/backup/app.json');
+     folders = ['html', 'json', 'oml'];
+     for(let i = 0; i < folders.length; i++){
+          fs.readdirSync('www/'+folders[i]).forEach(file => {  
+               fs.copyFileSync('www/'+folders[i]+'/'+file, 'ogx/backup/'+folders[i]+'/'+file);
+          });
+     }
+     
+     //back up files and remove link
+     let options = args[args.length-1];
+     let index = fs.readFileSync('www/'+options.index, 'utf8');
 
-    folders = ['js/bin', 'js/views', 'js/controllers', 'js/stages', 'css/bin', 'css/views', 'css/stages'];       
-    let to_compress = [];
-    let to_merge = [];
-    let files, reg;
-    for(let i = 0; i < folders.length; i++){
-        if(folders[i].indexOf('js') !== -1){
-            reg = new RegExp('<script (.*)'+folders[i]+'\/(.+)<\/script>\n', 'gim');            
-        }else{
-            reg = new RegExp('<link (.*)'+folders[i]+'\/(.+)>\n', 'gim');   
-        }
-        index = index.replace(reg, '');
+     index = index.replace(/<script (.*)js\/stages\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');
+     index = index.replace(/<link (.*)css\/stages\/(.+)>(\r\n|\r|\n)*/gim, ''); 
+     index = index.replace(/<script (.*)js\/views\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');
+     index = index.replace(/<link (.*)css\/views\/(.+)>(\r\n|\r|\n)*/gim, '');
+     index = index.replace(/<script (.*)js\/controllers\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');  
+     index = index.replace(/<link (.*)css\/bin\/(.+)>(\r\n|\r|\n)*/gim, ''); 
+     index = index.replace(/<script (.*)js\/bin\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');
 
-        if(!fs.existsSync('ogx/backup/'+folders[i])){
-            fs.mkdirSync('ogx/backup/'+folders[i]);
-        } 
-        if(fs.existsSync('www/'+folders[i])){  
-            files = 0;
-            fs.readdirSync('www/'+folders[i]).forEach(file => {      
-                files++;            
-                fs.copyFileSync('www/'+folders[i]+'/'+file, 'ogx/backup/'+folders[i]+'/'+file);
-                files_to_delete.push('www/'+folders[i]+'/'+file);  
-                if(index){
-                    //remove link from index.html   
-                    if(file.includes('.js')){
-                        index = index.replace('<script type="application/javascript" src="'+folders[i]+'/'+file+'"></script>\n', '');     
-                    }else{
-                        if(file.includes('.css')){
-                            index = index.replace('<link rel="stylesheet" href="'+folders[i]+'/'+file+'" type="text/css">\n', '');    
-                        } 
-                    }               
-                }
-            }); 
-            if(files && folders[i].slice(0, 2) === 'js'){                
-                if(ejs && folders[i] === 'js/bin'){
-                    //skip bin in ejs
-                    to_compress.push('uglifyjs-folder ogx/backup/'+folders[i]+' -o www/js/min/bin.js');
-                }else{                   
-                    to_merge.push('ogx/backup/js/min/'+folders[i].split('/').pop()+'.min.js');
-                    to_compress.push('uglifyjs-folder ogx/backup/'+folders[i]+' -o ogx/backup/js/min/'+folders[i].split('/').pop()+'.min.js');
-                }
-            }  
-        }
-        if(fs.existsSync('www/'+folders[i])){
-            folders_to_delete.push('www/'+folders[i]);           
-        } 
-    }   
-    
+     folders = ['js/bin', 'js/views', 'js/controllers', 'js/stages', 'css/bin', 'css/views', 'css/stages'];       
+     let to_compress = [];
+     let to_merge = [];
+     let files, reg;
+     for(let i = 0; i < folders.length; i++){
+          if(folders[i].indexOf('js') !== -1){
+               reg = new RegExp('<script (.*)'+folders[i]+'\/(.+)<\/script>\n', 'gim');            
+          }else{
+               reg = new RegExp('<link (.*)'+folders[i]+'\/(.+)>\n', 'gim');   
+          }
+          index = index.replace(reg, '');
+
+          if(!fs.existsSync('ogx/backup/'+folders[i])){
+               fs.mkdirSync('ogx/backup/'+folders[i]);
+          } 
+          if(fs.existsSync('www/'+folders[i])){  
+               files = 0;
+               fs.readdirSync('www/'+folders[i]).forEach(file => {      
+                    files++;            
+                    fs.copyFileSync('www/'+folders[i]+'/'+file, 'ogx/backup/'+folders[i]+'/'+file);
+                    files_to_delete.push('www/'+folders[i]+'/'+file);  
+                    if(index){
+                         //remove link from index.html   
+                         if(file.includes('.js')){
+                         index = index.replace('<script type="application/javascript" src="'+folders[i]+'/'+file+'"></script>\n', '');     
+                         }else{
+                         if(file.includes('.css')){
+                              index = index.replace('<link rel="stylesheet" href="'+folders[i]+'/'+file+'" type="text/css">\n', '');    
+                         } 
+                         }               
+                    }
+               }); 
+               if(files && folders[i].slice(0, 2) === 'js'){                
+                    if(ejs && folders[i] === 'js/bin'){
+                         //skip bin in ejs
+                         to_compress.push('uglifyjs-folder ogx/backup/'+folders[i]+' -o www/js/min/bin.js');
+                    }else{                   
+                         to_merge.push('ogx/backup/js/min/'+folders[i].split('/').pop()+'.min.js');
+                         to_compress.push('uglifyjs-folder ogx/backup/'+folders[i]+' -o ogx/backup/js/min/'+folders[i].split('/').pop()+'.min.js');
+                    }
+               }  
+          }
+          if(fs.existsSync('www/'+folders[i])){
+               folders_to_delete.push('www/'+folders[i]);           
+          } 
+     }   
+     
      for(let i = 0; i < to_compress.length; i++){
           exec(to_compress[i]);
      };
 
-    console.log('Info: Moving js files');    
-    let str = '';
-    let min;
-    for(let i = 0; i < to_merge.length; i++){
-        if(fs.existsSync(to_merge[i])){
-            min = fs.readFileSync(to_merge[i], 'utf8');
-            if(min){            
-                str += min+'\n';
-            }
-        }
-    }
-    if(str.length){        
-        fs.writeFileSync('www/js/min/min.js', str);
-    }else{
-        console.log('Warning: No js file to compress');    
-    }   
+     console.log('Info: Moving js files');    
+     let str = '';
+     let min;
+     for(let i = 0; i < to_merge.length; i++){
+          if(fs.existsSync(to_merge[i])){
+               min = fs.readFileSync(to_merge[i], 'utf8');
+               if(min){            
+                    str += min+'\n';
+               }
+          }
+     }
+     if(str.length){        
+          fs.writeFileSync('www/js/min/min.js', str);
+     }else{
+          console.log('Warning: No js file to compress');    
+     }   
 
-    console.log('Info: Compressing css files');    
-    const csss = ['css/bin', 'css/views', 'css/stages'];
-    str = '';
-    let css, stats; 
-    for(i = 0; i < csss.length; i++){
-        if(fs.existsSync('www/'+csss[i])){
-            if(!fs.existsSync('ogx/backup/'+csss[i])){
-                fs.mkdirSync('ogx/backup/'+csss[i]);
-            } 
-            fs.readdirSync('www/'+csss[i]).forEach(file => {
-                fs.copyFileSync('www/'+csss[i]+'/'+file, 'ogx/backup/'+csss[i]+'/'+file);
-                files_to_delete.push('www/'+csss[i]+'/'+file);   
-                //skip empty css files create from CLI
-                stats = fs.statSync('ogx/backup/'+csss[i]+'/'+file);
-                if(stats.size){
-                    css = fs.readFileSync('ogx/backup/'+csss[i]+'/'+file, 'utf8');
-                    if(css){
-                        str += css;                         
-                        if(index){
-                            //remove link from index.html      
-                            index = index.replace('<link rel="stylesheet" href="'+csss[i]+'/'+file+'" type="text/css">\n', '');
-                        }
+     console.log('Info: Compressing css files');    
+     const csss = ['css/bin', 'css/views', 'css/stages'];
+     str = '';
+     let css, stats; 
+     for(i = 0; i < csss.length; i++){
+          if(fs.existsSync('www/'+csss[i])){
+               if(!fs.existsSync('ogx/backup/'+csss[i])){
+                    fs.mkdirSync('ogx/backup/'+csss[i]);
+               } 
+               fs.readdirSync('www/'+csss[i]).forEach(file => {
+                    fs.copyFileSync('www/'+csss[i]+'/'+file, 'ogx/backup/'+csss[i]+'/'+file);
+                    files_to_delete.push('www/'+csss[i]+'/'+file);   
+                    //skip empty css files create from CLI
+                    stats = fs.statSync('ogx/backup/'+csss[i]+'/'+file);
+                    if(stats.size){
+                         css = fs.readFileSync('ogx/backup/'+csss[i]+'/'+file, 'utf8');
+                         if(css){
+                         str += css;                         
+                         if(index){
+                              //remove link from index.html      
+                              index = index.replace('<link rel="stylesheet" href="'+csss[i]+'/'+file+'" type="text/css">\n', '');
+                         }
+                         }else{
+                         console.log('Error: Could not read file', 'ogx/backup/'+csss[i]+'/'+file);
+                         return;
+                         }
                     }else{
-                        console.log('Error: Could not read file', 'ogx/backup/'+csss[i]+'/'+file);
-                        return;
-                    }
-                }else{
-                    console.log('Warning: Skipping empty files', 'ogx/backup/'+csss[i]+'/'+file);
-                }                      
-            });
-        }          
-        if(fs.existsSync('www/'+csss[i])){
-            folders_to_delete.push('www/'+csss[i]);     
-        }       
-    }
-    if(str.length){   
-        const res = csso.minify(str);
-        fs.writeFileSync('www/css/min/min.css', res.css); 
-    }else{
-        console.log('Warning: No css file to compress');    
-    }
+                         console.log('Warning: Skipping empty files', 'ogx/backup/'+csss[i]+'/'+file);
+                    }                      
+               });
+          }          
+          if(fs.existsSync('www/'+csss[i])){
+               folders_to_delete.push('www/'+csss[i]);     
+          }       
+     }
+     if(str.length){   
+          const res = csso.minify(str);
+          fs.writeFileSync('www/css/min/min.css', res.css); 
+     }else{
+          console.log('Warning: No css file to compress');    
+     }
 
-    console.log('Info: Cleaning up');  
-    if(files_to_delete.length){
-        for(i = 0; i < files_to_delete.length; i++){
-            if(fs.existsSync(files_to_delete[i])){
-                fs.unlinkSync(files_to_delete[i]);     
-            }
-        } 
-    }
-    if(folders_to_delete.length){
-        for(i = 0; i < folders_to_delete.length; i++){
-            if(fs.existsSync(folders_to_delete[i])){
-                fs.rmSync(folders_to_delete[i], {recursive:true});     
-            }
-        } 
-    }
-   
-    if(index){
-        index = index.replace('</head>', '<link rel="stylesheet" href="css/min/min.css">\n</head>');          
-        if(ejs){
-            index = index.replace('</head>', '<script type="application/javascript" src="js/min/bin.js"></script>\n</head>');   
-        }else{
-            index = index.replace('</head>', '<script type="application/javascript" src="js/min/min.js"></script>\n</head>'); 
-        }   
-        fs.writeFileSync('www/'+options.index, index);
-    }
+     console.log('Info: Cleaning up');  
+     if(files_to_delete.length){
+          for(i = 0; i < files_to_delete.length; i++){
+               if(fs.existsSync(files_to_delete[i])){
+                    fs.unlinkSync(files_to_delete[i]);     
+               }
+          } 
+     }
+     if(folders_to_delete.length){
+          for(i = 0; i < folders_to_delete.length; i++){
+               if(fs.existsSync(folders_to_delete[i])){
+                    fs.rmSync(folders_to_delete[i], {recursive:true});     
+               }
+          } 
+     }
+     
+     if(index){
+          index = index.replace('</head>', '<link rel="stylesheet" href="css/min/min.css">\n</head>');          
+          if(ejs){
+               index = index.replace('</head>', '<script type="application/javascript" src="js/min/bin.js"></script>\n</head>');   
+          }else{
+               index = index.replace('</head>', '<script type="application/javascript" src="js/min/min.js"></script>\n</head>'); 
+          }   
+          fs.writeFileSync('www/'+options.index, index);
+     }
 
-    console.log('Info: Compress success!'); 
+     console.log('Info: Compress success!'); 
 };
