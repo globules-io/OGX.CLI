@@ -11,12 +11,12 @@ module.exports = (args) => {
     if(args.length === 3){
         cargs.push('ejs');
     }
-    cargs.push(args[args.length-1])
+    cargs.push(args[args.length-1]);
+
     require('./compress.js')(cargs);
 
     //encrypt
-    if(args.length === 2){    
-        //missing flag
+    if(args.length > 1){    
         const arg = args.slice();    
         arg.pop(); 
         require('./encrypt.js')(arg.concat([options]));

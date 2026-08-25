@@ -1,39 +1,32 @@
 #!/usr/bin/env node
 
 module.exports = (args) => {
-    const fs = require('fs');
-    const exec = require('child_process').execSync;
-    const csso = require('csso');
-    let files_to_delete = [];
-    let folders_to_delete = [];
+     const fs = require('fs');
+     const exec = require('child_process').execSync;
+     const csso = require('csso');
+     let files_to_delete = [];
+     let folders_to_delete = [];
 
-    //ejs
-    let ejs = false;
-    if(args.length > 1 && args[0] === 'ejs'){
-        ejs = true;
-    }
-    
-    if(fs.existsSync('ogx/js')){
-        console.log('Error: Already minified!');
-        return;
-    }
+     //ejs
+     let ejs = false;
+     if(args.includes('ejs')){
+          ejs = true;
+     }
+     
+     if(fs.existsSync('ogx/js')){
+          console.log('Error: Already minified!');
+          return;
+     }
+
+     let folders = ['ogx', 'ogx/backup', 'ogx/backup/js', 'ogx/backup/css', 'www/js/min', 'www/css/min'];
+     folders.forEach(__folder => {
+          if(!fs.existsSync(__folder)){
+               fs.mkdirSync(__folder);
+          }
+     });
 
     console.log('Info: Backing up files');
-    if(!fs.existsSync('ogx')){
-        fs.mkdirSync('ogx');
-    }
-    if(!fs.existsSync('ogx/js')){
-        fs.mkdirSync('ogx/js');
-    } 
-    if(!fs.existsSync('ogx/css')){
-        fs.mkdirSync('ogx/css');
-    }   
-    if(!fs.existsSync('www/js/min')){
-        fs.mkdirSync('www/js/min');
-    }
-    if(!fs.existsSync('www/css/min')){
-        fs.mkdirSync('www/css/min');
-    }
+    
     //back up files and remove link
     let options = args[args.length-1];
     let index = fs.readFileSync('www/'+options.index, 'utf8');
@@ -46,7 +39,7 @@ module.exports = (args) => {
     index = index.replace(/<link (.*)css\/bin\/(.+)>(\r\n|\r|\n)*/gim, ''); 
     index = index.replace(/<script (.*)js\/bin\/(.+)><\/script>(\r\n|\r|\n)*/gim, '');
 
-    let folders = ['js/bin', 'js/views', 'js/controllers', 'js/stages', 'css/bin', 'css/views', 'css/stages'];       
+    folders = ['js/bin', 'js/views', 'js/controllers', 'js/stages', 'css/bin', 'css/views', 'css/stages'];       
     let to_compress = [];
     let to_merge = [];
     let files, reg;
@@ -58,14 +51,14 @@ module.exports = (args) => {
         }
         index = index.replace(reg, '');
 
-        if(!fs.existsSync('ogx/'+folders[i])){
-            fs.mkdirSync('ogx/'+folders[i]);
+        if(!fs.existsSync('ogx/backup/'+folders[i])){
+            fs.mkdirSync('ogx/backup/'+folders[i]);
         } 
         if(fs.existsSync('www/'+folders[i])){  
             files = 0;
             fs.readdirSync('www/'+folders[i]).forEach(file => {      
                 files++;            
-                fs.copyFileSync('www/'+folders[i]+'/'+file, 'ogx/'+folders[i]+'/'+file);
+                fs.copyFileSync('www/'+folders[i]+'/'+file, 'ogx/backup/'+folders[i]+'/'+file);
                 files_to_delete.push('www/'+folders[i]+'/'+file);  
                 if(index){
                     //remove link from index.html   
@@ -81,10 +74,10 @@ module.exports = (args) => {
             if(files && folders[i].slice(0, 2) === 'js'){                
                 if(ejs && folders[i] === 'js/bin'){
                     //skip bin in ejs
-                    to_compress.push('uglifyjs-folder ogx/'+folders[i]+' -o www/js/min/bin.js');
+                    to_compress.push('uglifyjs-folder ogx/backup/'+folders[i]+' -o www/js/min/bin.js');
                 }else{                   
-                    to_merge.push('ogx/js/min/'+folders[i].split('/').pop()+'.min.js');
-                    to_compress.push('uglifyjs-folder ogx/'+folders[i]+' -o ogx/js/min/'+folders[i].split('/').pop()+'.min.js');
+                    to_merge.push('ogx/backup/js/min/'+folders[i].split('/').pop()+'.min.js');
+                    to_compress.push('uglifyjs-folder ogx/backup/'+folders[i]+' -o ogx/backup/js/min/'+folders[i].split('/').pop()+'.min.js');
                 }
             }  
         }
@@ -93,9 +86,9 @@ module.exports = (args) => {
         } 
     }   
     
-    for(let i = 0; i < to_compress.length; i++){
-        exec(to_compress[i]);
-    };
+     for(let i = 0; i < to_compress.length; i++){
+          exec(to_compress[i]);
+     };
 
     console.log('Info: Moving js files');    
     let str = '';
@@ -120,16 +113,16 @@ module.exports = (args) => {
     let css, stats; 
     for(i = 0; i < csss.length; i++){
         if(fs.existsSync('www/'+csss[i])){
-            if(!fs.existsSync('ogx/'+csss[i])){
-                fs.mkdirSync('ogx/'+csss[i]);
+            if(!fs.existsSync('ogx/backup/'+csss[i])){
+                fs.mkdirSync('ogx/backup/'+csss[i]);
             } 
             fs.readdirSync('www/'+csss[i]).forEach(file => {
-                fs.copyFileSync('www/'+csss[i]+'/'+file, 'ogx/'+csss[i]+'/'+file);
+                fs.copyFileSync('www/'+csss[i]+'/'+file, 'ogx/backup/'+csss[i]+'/'+file);
                 files_to_delete.push('www/'+csss[i]+'/'+file);   
                 //skip empty css files create from CLI
-                stats = fs.statSync('ogx/'+csss[i]+'/'+file);
+                stats = fs.statSync('ogx/backup/'+csss[i]+'/'+file);
                 if(stats.size){
-                    css = fs.readFileSync('ogx/'+csss[i]+'/'+file, 'utf8');
+                    css = fs.readFileSync('ogx/backup/'+csss[i]+'/'+file, 'utf8');
                     if(css){
                         str += css;                         
                         if(index){
@@ -137,11 +130,11 @@ module.exports = (args) => {
                             index = index.replace('<link rel="stylesheet" href="'+csss[i]+'/'+file+'" type="text/css">\n', '');
                         }
                     }else{
-                        console.log('Error: Could not read file', 'ogx/'+csss[i]+'/'+file);
+                        console.log('Error: Could not read file', 'ogx/backup/'+csss[i]+'/'+file);
                         return;
                     }
                 }else{
-                    console.log('Warning: Skipping empty files', 'ogx/'+csss[i]+'/'+file);
+                    console.log('Warning: Skipping empty files', 'ogx/backup/'+csss[i]+'/'+file);
                 }                      
             });
         }          

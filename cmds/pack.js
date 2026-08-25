@@ -54,22 +54,25 @@ module.exports = (args) => {
         if(!fs.existsSync('ogx')){
             fs.mkdirSync('ogx');
         }
-        if(fs.existsSync('ogx/html')){
-            fs.rmSync('ogx/html', {recursive:true});
+        if(!fs.existsSync('ogx/backup')){
+            fs.mkdirSync('ogx/backup');
         }
-        if(fs.existsSync('ogx/oml')){
-            fs.rmSync('ogx/oml', {recursive:true});
+        if(fs.existsSync('ogx/backup/html')){
+            fs.rmSync('ogx/backup/html', {recursive:true});
         }
-        if(fs.existsSync('ogx/json')){
-            fs.rmSync('ogx/json', {recursive:true});    
+        if(fs.existsSync('ogx/backup/oml')){
+            fs.rmSync('ogx/backup/oml', {recursive:true});
+        }
+        if(fs.existsSync('ogx/backup/json')){
+            fs.rmSync('ogx/backup/json', {recursive:true});    
         }   
-        fs.mkdirSync('ogx/html');    
-        fs.mkdirSync('ogx/oml');    
-        fs.mkdirSync('ogx/json');            
+        fs.mkdirSync('ogx/backup/html');    
+        fs.mkdirSync('ogx/backup/oml');    
+        fs.mkdirSync('ogx/backup/json');            
         for(let i = 0; i < folders.length; i++){
             if(fs.existsSync('www/'+folders[i])){  
                 fs.readdirSync('www/'+folders[i]).forEach(file => {    
-                    fs.copyFileSync('www/'+folders[i]+'/'+file, 'ogx/'+folders[i]+'/'+file);
+                    fs.copyFileSync('www/'+folders[i]+'/'+file, 'ogx/backup/'+folders[i]+'/'+file);
                 });
             }
         }
@@ -79,28 +82,28 @@ module.exports = (args) => {
     function restore(){
         console.log('Info: restoring backed up files'); 
         for(let i = 0; i < folders.length; i++){
-            if(fs.existsSync('ogx/'+folders[i])){  
+            if(fs.existsSync('ogx/backup/'+folders[i])){  
                 if(!fs.existsSync('www/'+folders[i])){
                     fs.mkdirSync('www/'+folders[i]);
                 }
-                fs.readdirSync('ogx/'+folders[i]).forEach(file => {    
-                    fs.copyFileSync('ogx/'+folders[i]+'/'+file, 'www/'+folders[i]+'/'+file);
+                fs.readdirSync('ogx/backup/'+folders[i]).forEach(file => {    
+                    fs.copyFileSync('ogx/backup/'+folders[i]+'/'+file, 'www/'+folders[i]+'/'+file);
                 });
             }
         }
-        console.log('Info: Files restoed');             
+        console.log('Info: Files restored');             
     }
 
     function clean(){
         console.log('Info: cleaning back up files'); 
-        if(fs.existsSync('ogx/html')){
-            fs.rmSync('ogx/html', {recursive:true});
+        if(fs.existsSync('ogx/backup/html')){
+            fs.rmSync('ogx/backup/html', {recursive:true});
         }
-        if(fs.existsSync('ogx/oml')){
-            fs.rmSync('ogx/oml', {recursive:true});
+        if(fs.existsSync('ogx/backup/oml')){
+            fs.rmSync('ogx/backup/oml', {recursive:true});
         }
-        if(fs.existsSync('ogx/json')){
-            fs.rmSync('ogx/json', {recursive:true});    
+        if(fs.existsSync('ogx/backup/json')){
+            fs.rmSync('ogx/backup/json', {recursive:true});    
         } 
         console.log('Info: tidy!'); 
     }

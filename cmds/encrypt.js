@@ -5,11 +5,14 @@ module.exports = (args) => {
         console.log('Error: Missing arguments! Expected [key]');
         return;
     }
+
     const key = args[0];   
+
     //flag --js
-    let js_files = (args.length > 1 && args[1] === '--js');        
+    let js_files = args.includes('--js');        
     const fs = require('fs');
-    let conf = fs.readFileSync('www/app.json', 'utf-8');
+    let conf = fs.readFileSync('www/app.json', 'utf-8');    
+   
     if(conf){
         if(js_files){
             //add flag to config OGX.JS 1.41.0+
