@@ -55,10 +55,12 @@ module.exports = (args) => {
                });
           }       
      }   
-     if(fs.existsSync('www/app.json')){
-          fs.unlinkSync('www/app.json');
+     if(fs.existsSync('ogx/backup/app.json')){   
+          if(fs.existsSync('www/app.json')){
+               fs.unlinkSync('www/app.json');
+          }
+          fs.copyFileSync('ogx/backup/app.json', 'www/app.json');
      }
-     fs.copyFileSync('ogx/backup/app.json', 'www/app.json');
 
      console.log('Info: Restoring html files');   
      if(fs.existsSync('ogx/backup/html')){   
