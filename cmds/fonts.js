@@ -34,7 +34,7 @@ module.exports = (args) => {
                     fs.readdirSync('www/'+paths[i]+'/'+folder).forEach(file => {
                         if(reg.test(file) && !files.includes(file)){
                             font = file.split('.')[0].split('=');
-                            p = ('../../'+paths[i]+'/'+folder+'/'+file).replace(/\/\//g, '/');
+                            p = ('/'+paths[i]+'/'+folder+'/'+file).replace(/\/\//g, '/');
                             output += '@font-face {\n';
                             output += '    font-family:'+font[0]+';\n';
                             output += '    src:url("'+p+'");\n';
