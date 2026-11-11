@@ -7,24 +7,15 @@
                "bookmark": false,
                "cache": false,
                "jail": false,
-               "eval": false
+               "eval": false,
+               "idle": false
           },
           "cache": [],
           "errors": {}
      },
-     "vapps": {},
-     "preload": {},
-     "popups": {
-          "width": 300,
-          "height": 400,
-          "anim": "fade"
+     "preload": {
+         
      },
-     "windows": {
-          "head": "back",
-          "width": "100%"
-     },
-     "views": {},
-     "overlays": {},
      "splash": {
           "enabled": false,
           "color": null,
@@ -32,6 +23,27 @@
           "auto_hide": false,
           "hide_timeout": 0
      },
+     "theater": {
+          "enabled": false
+     },
+     "defaults": {
+          "stage": {
+               "anim": null
+          },
+          "overlay": {
+               "anim": "fade"
+          },
+          "popup": {
+               "width": 300,
+               "height": 400,
+               "anim": "fade"
+          },
+          "window": {
+               "head": "back",
+               "width": "100%"
+          }
+     },
+     "vapps": {},
      "rendertime": false,
      "scope": "public",
      "jwt": false
