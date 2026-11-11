@@ -20,6 +20,17 @@ module.exports = (args) => {
         arg.pop(); 
         require('./encrypt.js')(arg.concat([options]));
     }
+
+     //wasm flag --wasm key password
+     if(args.includes('--wasm')){
+          require('./wasm.js')(args);
+     }
+
+     //flag to create update package --zip
+     if(args.includes('--zip')){
+          require('./zip.js')(args);
+     }
+
     require('./prod.js')([options]);
     console.log('Info: release built!');  
 }
